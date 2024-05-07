@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+
+const {Router} = require('express');
+const router = Router();
 const path = require('path');
 
 router.get('/',(req,res) =>{
@@ -10,3 +11,5 @@ router.get('/',(req,res) =>{
 router.post('/checkIfExist',async(req,res) =>{
     //check in data base
 })
+module.exports = router;
+
