@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+
+const {Router} = require('express');
+const router = Router();
 
 const login = require('./login/login');
 const register = require('./register/register');
