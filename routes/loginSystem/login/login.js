@@ -7,3 +7,6 @@ router.get('/',(req,res) =>{
     res.send(file);
 })
 
+router.post('/checkIfExist',async(req,res) =>{
+    //check in data base
+})
