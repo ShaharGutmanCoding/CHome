@@ -9,15 +9,19 @@
         <title>Date Picker Button</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
     </head>
-<h1 class="text-center">בקשת עזרה</h1>
     <body>
+      <h1 class="text-center">בקשת עזרה</h1>
           <div>
               <select id="select_page" style="width:200px;" class="operator"> 
-                  <option value="">קטגוריות</option>
-                  <option value="בייביסיטר">בייביסיטר</option> 
-                  <option value="הסעות">הסעות</option>
-                  <option value="משק בית">משק בית</option>
-                  <option value="טיול לחיות מחמד">טיול לחיות מחמד</option>
+                  <option disabled selected> קטגוריות</option> 
+                  <option value="בייביסיטר"> 👩🏻‍🍼בייביסיטר </option> 
+                  <option value="הסעות">  🛻הסעות</option>
+                  <option value="קניות לבית"> 🛒קניות לבית</option>
+                  <option value="משק בית"> 🧽🧹משק בית</option>
+                  <option value="טיול לחיות מחמד"> 🐈‍⬛טיול לחיות מחמד</option>
+                  <option value="בישולים">  🍳 בישולים</option>
+                  <option value="אחר">⬅️אחר</option>
+
 
               </select>
           </div>
@@ -28,6 +32,17 @@
         <!-- This div will be used to display the calendar -->
         <div id="calendar" style="display: none;"></div>
         <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-auto">
+              <!-- Button from Bootstrap -->
+              <button type="button" class="btn btn-secondary">שליחת בקשה</button>
+            </div>
+          </div>
+        </div>
+
     </body>
 
 <script>
