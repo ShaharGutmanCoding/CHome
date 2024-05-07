@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Date Picker Button</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+  <button id="open-calendar">פתח יומן</button>
+  <div id="selected-date" style="display: none;"></div>
+
+  <!-- This div will be used to display the calendar -->
+  <div id="calendar" style="display: none;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+  <script src="script.js"></script>
+</body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+  const openCalendarButton = document.getElementById('open-calendar');
+  const calendarContainer = document.getElementById('calendar');
+  const selectedDateContainer = document.getElementById('selected-date');
+  let flatpickrInstance;
+
+  // Event listener for the button
+  openCalendarButton.addEventListener('click', function() {
+    if (!flatpickrInstance) {
+      // Initialize Flatpickr if not already initialized
+      flatpickrInstance = flatpickr(calendarContainer, {
+        inline: true, // Display calendar inline
+        dateFormat: 'Y-m-d', // Format of the selected date
+        defaultDate: 'today', // Start with today's date
+        onChange: function(selectedDates, dateStr, instance) {
+          // Show selected date
+          selectedDateContainer.textContent = 'תאריך שנבחר: ' + dateStr;
+          selectedDateContainer.style.display = 'block';
+        },
+        onReady: function(selectedDates, dateStr, instance) {
+          // Add listener to close calendar when a date is selected
+          instance.calendarContainer.addEventListener('click', function(event) {
+            if (event.target.classList.contains('flatpickr-day')) {
+              instance.close();
+            }
+          });
+        }
+      });
+    }
+
+    // Show the calendar when the button is clicked
+    calendarContainer.style.display = 'block';
+  });
+});
+
+</script>
+</html>
+
+

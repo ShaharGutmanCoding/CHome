@@ -1,0 +1,28 @@
+.calendar-container {
+    position: relative;
+  }
+  
+  #datepicker {
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  #calendar-button {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    background-color: #f0f0f0;
+    border: none;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  #calendar-button:hover {
+    background-color: #e0e0e0;
+  }
+  
