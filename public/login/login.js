@@ -1,4 +1,5 @@
 let form = document.getElementById('loginForm');
+let failTry = document.getElementById('failMessage');
 
 form.addEventListener('submit', async(event) => {
     let userName = document.getElementById('userName');
@@ -11,4 +12,10 @@ form.addEventListener('submit', async(event) => {
         body:`userName=${userName},password=${password}`
     })
     .then(response=>response.json())
+    .then(data=>{
+        if(data.check==true)
+            window.location.href = data.redirect;
+        else
+        failTry.innerHTML = data.message;
+    })
 })

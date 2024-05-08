@@ -10,6 +10,11 @@ router.get('/',(req,res) =>{
 
 router.post('/checkIfExist',async(req,res) =>{
     //check in data base
+    var isUserExist;
+if(isUserExist)
+    res.send({check:true, redirect:"/homePage"})
+else
+    res.send({check:false, message:"username or password are not correct"})
 })
 module.exports = router;
 
