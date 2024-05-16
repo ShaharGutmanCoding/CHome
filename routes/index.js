@@ -4,10 +4,10 @@ const router = Router();
 
 const loginSystem = require('./loginSystem/loginSystem');
 const requestPage = require('./requestPage/requestPage');
-const caalsPage = require('./callsPage/callsPage');
+const callsPage = require('./callsPage/callsPage.js');
 
 router.use('/loginSystem', loginSystem);
 router.use('/requestPage', requestPage);
-router.use('/callsPage', caalsPage);
+router.use('/callsPage', callsPage);
 
 module.exports = router;
