@@ -32,8 +32,8 @@ jobs:
           port: ${{ secrets.PORT }}
           script_stop: true
           script: |
-            sudo docker stop calc
-            sudo docker rm calc
+            sudo docker stop chome
+            sudo docker rm chome
             sudo docker rmi shahargut/chome
             sudo docker pull shahargut/chome
             sudo docker run --name chome -d -p 80:3000 shahargut/chome
