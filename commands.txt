@@ -12,3 +12,6 @@ git push origin main = לדחוף את השינויים לענן\
 git status
 
 git branch = באיזה בראנץ אני
+
+האייפי של השרת
+http://3.71.112.33/
