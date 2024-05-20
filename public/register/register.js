@@ -14,4 +14,5 @@ form.addEventListener('submit', async(event) => {
         body:`userName=${userName},password=${password},id=${id},phoneNumber=${phoneNumber},email=${email}`
     })
     .then(response=>response.json())
-})
+    .then(()=> window.location.href = '/loginSystem/login')
+});
