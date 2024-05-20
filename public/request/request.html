@@ -8,8 +8,14 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Date Picker Button</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+        <script>
+          $(function () {
+            $("#header").load("./header/header.html");
+          });
+        </script>
     </head>
     <body>
+      <div id="header"></div><br>
       <h1 class="text-center">בקשת עזרה</h1>
           <div>
               <select id="select_page" style="width:200px;" class="operator"> 
