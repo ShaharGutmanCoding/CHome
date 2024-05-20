@@ -10,8 +10,7 @@ let categorysObject = [
 ]
 
 for(let i = 0; i < categorysObject.length; i++){
-  const option = document.createElement("option")
-
+  
 }
 document.createElement("option")
 
