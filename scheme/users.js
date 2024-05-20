@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const users = new mongoose.Scheme({
+const users = new mongoose.Schema({
     name:{
         type:String,
         default:'No-typed',
@@ -29,4 +29,4 @@ const users = new mongoose.Scheme({
     },
 })
 
-module.exports = mongoose.model('users',users);
+module.exports = mongoose.model('usersChome',users);
