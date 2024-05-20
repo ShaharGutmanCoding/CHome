@@ -10,30 +10,52 @@
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   </head>
   <body>
+
+  <div class="container ">
     <h1 class="text-center">בקשת עזרה</h1>
-    <div>
-        <select id="select_page" style="width:200px;" class="operator"> 
-            <option disabled selected> קטגוריות</option> 
-        </select>
+    <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
+      <p>
+         השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכים אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכים הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+      </p>
     </div>
-    
-    <button id="open-calendar"> בחר תאריך</button>
-    <div id="selected-date" style="display: none;"></div>
-
-    <!-- This div will be used to display the calendar -->
-    <div id="calendar" style="display: none;"></div>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
-    <div class="container">
+    <form>
+    <div class="border p-4 rounded-3 ">
+      <div class="row justify-content-center mb-3">
+          <select id="select_page" style="width:200px;" class="operator form-select text-center"> 
+              <option disabled selected> קטגוריות</option> 
+          </select>
+      </div>
       <div class="row justify-content-center">
-        <div class="col-auto">
-          <!-- Button from Bootstrap -->
-          <button type="button" class="btn btn-secondary">שליחת בקשה</button>
+        <div class="col-3">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Year" aria-label="Username" aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1">שנה</span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Month" aria-label="Username" aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1">חודש</span>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Day" aria-label="Username" aria-describedby="basic-addon1">
+            <span class="input-group-text" id="basic-addon1">יום</span>
+          </div>
+        </div>
+        <div class="mb-3">
+          <textarea class="form-control " rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+        </div>
+        <div class="row justify-content-center mb-3">
+          <div class="col-auto">
+            <!-- Button from Bootstrap -->
+            <button type="submit" class="btn btn-primary ">שליחת בקשה</button>
+          </div>
         </div>
       </div>
-    </div>
-
+    </form>
+  </div>
   </body>
 
   <script src="./request.js"></script>

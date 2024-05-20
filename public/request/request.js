@@ -11,7 +11,9 @@ let categorysObject = [
 
 for(let i = 0; i < categorysObject.length; i++){
   const option = document.createElement("option")
-
+  option.text=categorysObject[i].categoryName
+  option.id = (categorysObject[i].valueId)
+  categorySelect.appendChild(option)
 }
 document.createElement("option")
 
