@@ -1,4 +1,24 @@
-$(document).ready(function () {
+var categorySelect = document.getElementById("select_page")
+
+let categorysObject = [
+  {categoryName:"👩🏻‍🍼בייביסיטר ",valueId:"Babysitting",},
+  {categoryName:"🛻הסעות",valueId:"Drives",},
+  {categoryName:"🛒קניות לבית",valueId:"Shopping",},
+  {categoryName:" 🐈‍⬛טיול לחיות מחמד",valueId:"PetWalk",},
+  {categoryName:"🍳 בישולים",valueId:"Cooking",},
+  {categoryName:"⬅️אחר",valueId:"Other",},
+]
+
+for(let i = 0; i < categorysObject.length; i++){
+  const option = document.createElement("option")
+
+}
+document.createElement("option")
+
+
+//Calander script (maybe delete)
+
+/*$(document).ready(function () {
 //change selectboxes to selectize mode to be searchable
   $("select").select2();
 });
@@ -32,3 +52,4 @@ $(document).ready(function () {
       calendarContainer.style.display = 'block';
   });
 });
+*/
