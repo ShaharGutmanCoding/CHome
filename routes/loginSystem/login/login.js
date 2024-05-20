@@ -10,7 +10,7 @@ router.get('/',(req,res) =>{
 })
 
 async function findByName(name){
-    const documents = await users.findOne({name:name});
+    const documents = await users.findOne({userName:name});
     if(documents){
         console.log(JSON.stringify(documents));
         return documents;
@@ -23,10 +23,10 @@ async function findByName(name){
 
 router.post('/checkIfExist',async(req,res) =>{
     //check in data base
-    let username = req.body?.username;
+    let userName = req.body?.userName;
     let password = req.body?.password;
 
-    let user = await findByName(username);
+    let user = await findByName(userName);
     
     if(user){
         if (user.password == password) {
