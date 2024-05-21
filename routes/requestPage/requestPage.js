@@ -24,6 +24,9 @@ router.post('/newCall',async(req,res) => {
 
     if(category && date && description){    
         await ticket.create({category: category, date: date, description: description,})
+        res.statusCode(200).send('ticket created succsessfully');
+    }else{
+        res.statusCode(503).send('cant create ticket');
     }
 });
 
