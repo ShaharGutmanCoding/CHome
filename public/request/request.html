@@ -1,57 +1,38 @@
+<!DOCTYPE html>
 <html>
-    <head>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Date Picker Button</title>
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    </head>
-    <body>
-      <h1 class="text-center">בקשת עזרה</h1>
-          <div>
-              <select id="select_page" style="width:200px;" class="operator"> 
-                  <option disabled selected> קטגוריות</option> 
-                  <option value="בייביסיטר"> 👩🏻‍🍼בייביסיטר </option> 
-                  <option value="הסעות">  🛻הסעות</option>
-                  <option value="קניות לבית"> 🛒קניות לבית</option>
-                  <option value="משק בית"> 🧽🧹משק בית</option>
-                  <option value="טיול לחיות מחמד"> 🐈‍⬛טיול לחיות מחמד</option>
-                  <option value="בישולים">  🍳 בישולים</option>
-                  <option value="אחר">⬅️אחר</option>
-
-
-              </select>
-          </div>
-      
-        <button id="open-calendar"> בחר תאריך</button>
-        <div id="selected-date" style="display: none;"></div>
-
-        <!-- This div will be used to display the calendar -->
-        <div id="calendar" style="display: none;"></div>
-        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-
-
-        <div class="container">
-          <div class="row justify-content-center">
-            <div class="col-auto">
-              <!-- Button from Bootstrap -->
-              <button type="button" class="btn btn-secondary">שליחת בקשה</button>
+<head>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Request Page</title>
+</head>
+<body>
+<div class="container">
+    <h1 class="text-center">בקשת עזרה</h1>
+    <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
+        <p>
+            השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+        </p>
+    </div>
+    <form id="requestForm">
+        <div class="border p-4 rounded-3">
+            <div class="row justify-content-center mb-3">
+                <select id="category" style="width:200px;" class="operator form-select text-center">
+                    <option disabled selected>קטגוריות</option>
+                </select>
             </div>
-          </div>
+            <div class="mb-3">
+                <textarea id="description" class="form-control" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+            </div>
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">שליחת בקשה</button>
+                </div>
+            </div>
         </div>
-
-    </body>
-
-<script src="/request/request.js"></script>
-<script src="https://www.negishim.com/accessibility/accessibility_pro_group255.js" type="text/javascript"></script>
-<script type="text/javascript">
-    accessibility_rtl = true;
-    pixel_from_side = 20;
-    pixel_from_start = 20;
-</script>
-
+    </form>
+</div>
+<script src="./request/request.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
 </html>

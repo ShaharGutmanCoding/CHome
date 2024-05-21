@@ -1,34 +1,45 @@
-$(document).ready(function () {
-//change selectboxes to selectize mode to be searchable
-  $("select").select2();
-});
+document.addEventListener("DOMContentLoaded", function() {
+  var categorySelect = document.getElementById("category");
 
-  document.addEventListener('DOMContentLoaded', function() {
-  const openCalendarButton = document.getElementById('open-calendar');
-  const calendarContainer = document.getElementById('calendar');
-  const selectedDateContainer = document.getElementById('selected-date');
-  let flatpickrInstance;
+  let categorysObject = [
+      {categoryName: "👩🏻‍🍼בייביסיטר ", valueId: "Babysitting"},
+      {categoryName: "🛻הסעות", valueId: "Drives"},
+      {categoryName: "🛒קניות לבית", valueId: "Shopping"},
+      {categoryName: " 🐈‍⬛טיול לחיות מחמד", valueId: "PetWalk"},
+      {categoryName: "🍳 בישולים", valueId: "Cooking"},
+      {categoryName: "⬅️אחר", valueId: "Other"}
+  ];
 
-  // Event listener for the button
-  openCalendarButton.addEventListener('click', function() {
-    if (!flatpickrInstance) {
-    // Initialize Flatpickr if not already initialized
-      flatpickrInstance = flatpickr(calendarContainer, {
-      inline: true, // Display calendar inline
-      dateFormat: 'Y-m-d', // Format of the selected date
-      defaultDate: 'today', // Start with today's date
-      onClose: function(selectedDates, dateStr, instance) {
-    // Show selected date
-      selectedDateContainer.textContent = 'תאריך שנבחר: ' + dateStr;
-      selectedDateContainer.style.display = 'block';
+  for (let i = 0; i < categorysObject.length; i++) {
+      const option = document.createElement("option");
+      option.text = categorysObject[i].categoryName;
+      option.value = categorysObject[i].valueId;
+      categorySelect.appendChild(option);
+  }
 
-    // Hide the calendar
-      calendarContainer.style.display = 'none';
-    }
-  });
-}
+  function getCurrentDateTime() {
+      let now = new Date();
+      let date = now.toLocaleDateString();
+      let time = now.toLocaleTimeString();
+      return `${date} ${time}`;
+  }
 
-    // Show the calendar when the button is clicked
-      calendarContainer.style.display = 'block';
-  });
+  function sendRequest(event) {
+      event.preventDefault(); // Prevent the form from submitting and reloading the page
+
+      var category = document.getElementById("category").value;
+      var description = document.getElementById("description").value;
+      var dateTime = getCurrentDateTime();
+
+
+      fetch("/requestPage/newCall", {
+          method: "post",
+          headers: {
+              'Content-Type': 'application/x-www-form-urlencoded'
+          },
+          body: `category=${category}&date=${dateTime}&description=${description}`
+      });
+  }
+
+  document.getElementById("requestForm").addEventListener("submit", sendRequest);
 });
