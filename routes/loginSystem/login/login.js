@@ -9,8 +9,8 @@ router.get('/',(req,res) =>{
     res.sendFile(file);
 })
 
-async function findByObject(object){
-    const documents = await users.findOne({email: object});
+async function findByEmail(email){
+    const documents = await users.findOne({email: email});
     if(documents){
         console.log(JSON.stringify(documents));
         return documents;
@@ -28,7 +28,7 @@ router.post('/checkIfExist',async(req,res) =>{
     if(req.cookies?.isLogged){
 
     }
-    let user = await findByObject(email);
+    let user = await findByEmail(email);
     
     if(user){
         if (user.password == password) {
