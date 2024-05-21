@@ -4,7 +4,7 @@ const path = require('path');
 const ticket = require('../../scheme/ticket');
 
 router.get('/',(req,res) =>{
-    const file = path.join(__dirname + '../../../public/callsPage.html');
+    const file = path.join(__dirname + '../../../public/callsPage/callsPage.html');
     res.sendFile(file);
 })
 
