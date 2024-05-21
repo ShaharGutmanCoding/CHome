@@ -3,13 +3,13 @@ const router = Router();
 const path = require('path');
 const ticket = require('../../scheme/ticket');
 
-router.use((req,res,next) => {
-    if(req.cookies?.isLogged){
-        next();
-    }else{
-        res.redirect('#')
-    }
-});
+// router.use((req,res,next) => {
+//     if(req.cookies?.isLogged){
+//         next();
+//     }else{
+//         res.redirect('#')
+//     }
+// });
 
 router.get('/',(req,res) =>{
     const file = path.join(__dirname + '../../../public/callsPage/callsPage.html');
