@@ -1,6 +1,8 @@
+<!DOCTYPE html>
 <html>
   <head>
       <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <title>Request Page</title>
@@ -10,10 +12,11 @@
   <div class="container ">
     <h1 class="text-center">בקשת עזרה</h1>
     <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
-      <p>
-         השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכים אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכים הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
-      </p>
+        <p>
+            השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+        </p>
     </div>
+<<<<<<< HEAD
     <form id="formSelect">
       <div class="border p-4 rounded-3 ">
       <div class="row justify-content-center mb-3">
@@ -82,4 +85,27 @@
 
   <script src="./request/request.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+=======
+    <form id="requestForm">
+        <div class="border p-4 rounded-3">
+            <div class="row justify-content-center mb-3">
+                <select id="category" style="width:200px;" class="operator form-select text-center">
+                    <option disabled selected>קטגוריות</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <textarea id="description" class="form-control" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+            </div>
+            <div class="row justify-content-center mb-3">
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary">שליחת בקשה</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<script src="./request/request.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+>>>>>>> 94ac486fffa4ed1262225cd3ff649c760d67ee65
 </html>

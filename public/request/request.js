@@ -100,4 +100,3 @@ function ShowModal(code, date,category,note){
       calendarContainer.style.display = 'block';
   });
 });
-*/
