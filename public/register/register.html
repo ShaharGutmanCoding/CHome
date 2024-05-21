@@ -11,10 +11,19 @@
         <div class="row"><div class="col"><h1>register page</h1></div></div><br>
         <div class="row ">
             <form id="registerForm">
-                <input type="text" class="form-control" id="userName" placeholder="Username" required><br>
+                <input type="text" class="form-control" id="firstName" placeholder="first name" required><br>
+                <input type="text" class="form-control" id="lastName" placeholder="last name" required><br>
                 <input type="text" class="form-control" id="password" placeholder="Password" required><br>
                 <input type="text" class="form-control" id="confirmPassword" placeholder="Repeat password" required><br>
 
+                <select class="form-select" aria-label="Default select example" id="region">
+                    <option selected>select your region:</option>
+                    <option value="south">דרום</option>
+                    <option value="north">צפון</option>
+                    <option value="jerusalem">ירושלים</option>
+                    <option value="center">מרכז</option>
+                </select>
+                <input type="text" class="form-control" id="city" placeholder="city" required><br>
                 <input type="text" class="form-control" id="id" placeholder="Id" required><br>
                 <input type="text" class="form-control" id="phoneNumber" placeholder="Phone number" required><br>
                 <input type="text" class="form-control" id="email" placeholder="Email" required><br>
