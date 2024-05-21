@@ -8,9 +8,9 @@ router.get('/',(req,res) =>{
     res.sendFile(file);
 })
 
-router.get("/getCalls", async(req,res)=>{
-var calls =await ticket.find();
+router.get('/getCalls',async(req,res)=>{
+let calls = await ticket.find();
 res.json(calls);
-});
+})
 
 module.exports = router;

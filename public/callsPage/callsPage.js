@@ -1,18 +1,18 @@
-let counter = document.getElementById('counter');
-let requestsContainer = document.getElementById("requestsContainer");
 
-function appendRequest(call) {
-  let requestDiv = document.createElement('div');
-  requestDiv.classList = 'Request';
-  requestDiv.textContent = call.description;
-  requestsContainer.appendChild(requestDiv);
+
+document.getElementById(requestsContainer);
+
+
+function createCall(object){
+  let div = document.createElement("div");
+  div.classList = "Request";
+  div.textContent = object.description;
+  requestsContainer.appendChild(div);
 }
 
-fetch("/callsPage/getCalls")
-.then(response=> response.json())
+fetch('/callsPage/getCalls')
+.then(response=>response.json())
 .then(data=>{
-  data.forEach(call=>{
-    appendRequest(call)
-  })
-  
+for(let i=0; i<data.length; i++ )
+createCall(data[i]);
 })
