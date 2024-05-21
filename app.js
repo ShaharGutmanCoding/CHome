@@ -3,6 +3,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/index')
 const path = require('path'); 
+const cookieParser = require('cookie-parser');
 require('dotenv').config()
 const app = express();
 const PORT = 3000;
