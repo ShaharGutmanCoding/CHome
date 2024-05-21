@@ -14,14 +14,14 @@ router.post('/createUser', async(req,res) => {
     let firstName = req.body?.firstName;
     let lastName = req.body?.lastName;
     let password = req.body?.password;
-    let region = req.body?.firstName;
-    let city = req.body?.firstName;
+    let region = req.body?.region;
+    let city = req.body?.city;
     let id = req.body?.id;
     let phoneNum = req.body?.phoneNum;
     let email = req.body?.email;
 
-    console.log(userName);
-    if (userName && password && id && phoneNum && email ) {
+    console.log(firstName);
+    if (firstName && lastName && password && region && city && id && phoneNum && email ) {
         let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email});
         res.send(response);
     }
