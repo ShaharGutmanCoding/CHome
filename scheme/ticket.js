@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const ticket = new mongoose.Scheme({
+const ticket = new mongoose.Schema({
     category:{
         type:String,
         default:'',
@@ -14,7 +14,7 @@ const ticket = new mongoose.Scheme({
         type:String,
         default:'',
         require: true,
-    }
+    },
 })
 
 module.exports = mongoose.model('ticket',ticket);

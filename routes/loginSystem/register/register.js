@@ -2,6 +2,7 @@
 const {Router} = require('express');
 const router = Router();
 const path = require('path');
+const users = require('../../../scheme/users');
 
 router.get('/',(req,res) => {
     const file = path.join(__dirname + '../../../../public/register/register.html');
@@ -9,14 +10,17 @@ router.get('/',(req,res) => {
 })
 
 router.post('/createUser', async(req,res) => {
-    let username = req.body?.username;
+    console.log('creating user');
+    let userName = req.body?.userName;
     let password = req.body?.password;
     let id = req.body?.id;
-    let phoneNumber = req.body?.phoneNumber;
+    let phoneNum = req.body?.phoneNum;
     let email = req.body?.email;
 
-    if (!username && !password && !id && !phoneNumber && !email ) {
-        await users.create({username: username, password: password, id: id, phoneNumber: phoneNumber, email: email});
+    console.log(userName);
+    if (userName && password && id && phoneNum && email ) {
+        let response = await users.create({userName: userName, password: password, id: id, phoneNum: phoneNum, email: email});
+        res.send(response);
     }
 })
 module.exports = router;
