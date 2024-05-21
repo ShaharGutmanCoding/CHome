@@ -25,7 +25,7 @@ function createCall(object) {
   date.textContent = object.date;
   date.style.display = "block"; 
   date.style.fontSize = "10px"; 
-  date.style.textAlign = "left"; 
+  date.style.textAlign = "left";
   div.appendChild(date);
 
   requestsContainer.appendChild(div);
