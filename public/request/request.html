@@ -17,36 +17,17 @@
     <form>
     <div class="border p-4 rounded-3 ">
       <div class="row justify-content-center mb-3">
-          <select id="select_page" style="width:200px;" class="operator form-select text-center"> 
+          <select id="category" style="width:200px;" class="operator form-select text-center"> 
               <option disabled selected> קטגוריות</option> 
           </select>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-3">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Year" aria-label="Username" aria-describedby="basic-addon1">
-            <span class="input-group-text" id="basic-addon1">שנה</span>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Month" aria-label="Username" aria-describedby="basic-addon1">
-            <span class="input-group-text" id="basic-addon1">חודש</span>
-          </div>
-        </div>
-        <div class="col-3">
-          <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="Day" aria-label="Username" aria-describedby="basic-addon1">
-            <span class="input-group-text" id="basic-addon1">יום</span>
-          </div>
-        </div>
         <div class="mb-3">
-          <textarea class="form-control " rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+          <textarea id="description" class="form-control " rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
         </div>
         <div class="row justify-content-center mb-3">
           <div class="col-auto">
             <!-- Button from Bootstrap -->
-            <button type="submit" class="btn btn-primary ">שליחת בקשה</button>
+            <button type="submit" class="btn btn-primary " onclick="sendRequest()">שליחת בקשה</button>
           </div>
         </div>
       </div>
