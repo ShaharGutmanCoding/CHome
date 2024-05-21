@@ -12,7 +12,7 @@ router.get('/',(req,res) => {
 router.post('/newCall',async(req,res) => {
     let category = req.body?.category;
     let date = req.body?.date;
-    let description = req.body?.date;
+    let description = req.body?.description;
 
     if(category && date && description){    
         await ticket.create({category: category, date: date, description: description,})
