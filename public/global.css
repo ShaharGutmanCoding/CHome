@@ -1,0 +1,41 @@
+
+.main-bg-color{
+    background-color:white;
+}
+
+.secondary-bg{
+    background-color:#fbe490;
+    border-color: #ebb800;
+}
+
+.main-title{
+    font-family:sans-serif;
+    color:rgb(96, 92, 92) ;
+    font-size:xx-large;
+    text-align: center;
+}
+
+.second-title{
+    color:rgb(136, 133, 133) ;
+    font-size:medium;
+    font-weight: bold;
+}
+
+.paragraph{
+    color:rgb(142, 135, 135) ;
+    font-size:medium;
+    font: weight 350px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+
+.main-bt{
+    font-family:sans-serif;
+    background-color:#79c6eb ;
+    border-radius:8%;
+    border-color:#79c6eb ;  
+}
+
+.main-href{
+    color: black;
+}
