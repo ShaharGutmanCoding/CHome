@@ -35,6 +35,7 @@ router.post('/checkIfExist',async(req,res) =>{
         if (user.password == password) {
             res.cookie('isLogged', 'true',{maxAge: 1000 * 60 * 60 * 24});
             res.cookie('email', user.email, {maxAge: 1000 * 60 * 60 * 24});
+            res.cookie('firstName', usre.firstName, {maxAge: 1000 * 60 * 60 * 24});
             res.json({flag:true, router:"#"});
         }else{
             res.json({flag:false, error:'password inncorrect, try again'});
