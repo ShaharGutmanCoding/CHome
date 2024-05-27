@@ -3,6 +3,7 @@ const {Router} = require('express');
 const router = Router();
 const path = require('path');
 const users = require('../../../scheme/users');
+const cookieParser = require('cookie-parser');
 
 router.get('/',(req,res) =>{
     const file = path.join(__dirname + '../../../../public/login/login.html');
