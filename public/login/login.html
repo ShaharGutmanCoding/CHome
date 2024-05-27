@@ -23,8 +23,8 @@
         <div class="row justify-content-center ">
             <div id="loginDiv" class="w-75 border border-3 border-secondary rounded-3 p-3 border-opacity-25">
                 <form id="loginForm">
-                    <input type="text" class="form-control mb-3" id="userName" placeholder="User name" required>
-                    <input type="text" class="form-control mb-4" id="password" placeholder="Password" required>
+                    <input type="email" class="form-control mb-3 text-end " id="email"  placeholder="כתובת אימייל" required>
+                    <input type="text" class="form-control mb-4 text-end" id="password" placeholder="סיסמה" required>
                     <input type="submit" class="btn btn-primary" id="submit">
                 </form>
             </div>
@@ -32,7 +32,7 @@
         <div class="mt-2">
             <div id="failMessage" style="color: red;"></div>
             <div>forgot the password? <a href="/loginSystem/changePassword">click here</a> to change it</div>
-            <div>don't have an accont? <a href="/loginSystem/register">click here</a> to register</div><br>
+            <div>don't have an accont? <a href="/loginSystem/register">click here</a> to register</div>
         </div>
     </div>
     <script src="/login/login.js"></script>
