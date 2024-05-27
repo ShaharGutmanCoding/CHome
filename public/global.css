@@ -5,31 +5,37 @@
 
 .secondary-bg{
     background-color:#fbe490;
+    border-color: #ebb800;
 }
 
 .main-title{
-    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color:rgb(64, 60, 60) ;
+    font-family:sans-serif;
+    color:rgb(96, 92, 92) ;
     font-size:xx-large;
     text-align: center;
 }
 
 .second-title{
-    color:rgb(109, 106, 106) ;
+    color:rgb(136, 133, 133) ;
     font-size:medium;
     font-weight: bold;
 }
 
 .paragraph{
-    color:rgb(44, 41, 41) ;
+    color:rgb(142, 135, 135) ;
     font-size:medium;
-    font-weight: lighter;
+    font: weight 350px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 
 .main-bt{
-    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family:sans-serif;
     background-color:#79c6eb ;
     border-radius:8%;
     border-color:#79c6eb ;  
+}
+
+.main-href{
+    color: black;
 }
