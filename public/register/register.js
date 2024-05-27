@@ -27,3 +27,4 @@ form.addEventListener('submit', async(event) => {
         failTry.textContent = "password confirm is not same to chosen password"
     }
 });
+
