@@ -15,3 +15,6 @@ git branch = באיזה בראנץ אני
 
 האייפי של השרת
 http://3.71.112.33/
+
+mail:
+avivmalako10@gmail.com
