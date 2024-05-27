@@ -10,6 +10,10 @@ const ticket = new mongoose.Schema({
         type:String,
         require: true,
     },
+    createdBy:{
+        type:String,
+        require: true,
+    },
     description:{
         type:String,
         default:'',

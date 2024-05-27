@@ -33,7 +33,6 @@ const users = new mongoose.Schema({
 
     email:{
         type:String,
-        default:'',
         unique: true,
     },
 
