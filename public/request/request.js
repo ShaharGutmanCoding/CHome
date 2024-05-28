@@ -1,17 +1,27 @@
-var categorySelect = document.getElementById("select_page")
-const form = document.getElementById('formSelect')
+var categorySelect = document.getElementById("select_page");
+const form = document.getElementById('formSelect');
 
+function fixEmailAdress(value) {
+  return value.replace("%40", "@");
+}
 
-
-function getUsernameByEmail() {
+async function getUsernameByEmail() {
   const cookies = document.cookie.split(';');
   for (let cookie of cookies) {
-    const [cookieName, cookieValue] = cookie.trim().split('=');
+    let [cookieName, cookieValue] = cookie.trim().split('=');
     if (cookieName === 'email') {
-      cookieValue =  fixEmailAdress(cookieValue);
+      cookieValue = fixEmailAdress(cookieValue);
+      let response = await fetch("/requestPage/getUserName", {
+        method: 'POST',
+        credentials: 'include',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `email=${cookieValue}`
+      });
+      let data = await response.json();
+      return data.firstName;
     }
   }
-  return null; 
+  return null;
 }
 
 function getCurrentDateTime() {
@@ -22,38 +32,32 @@ function getCurrentDateTime() {
 }
 
 let categorysObject = [
-  {categoryName:"👩🏻‍🍼בייביסיטר ",valueId:"Babysitting",},
-  {categoryName:"🛻הסעות",valueId:"Drives",},
-  {categoryName:"🛒קניות לבית",valueId:"Shopping",},
-  {categoryName:" 🐈‍⬛טיול לחיות מחמד",valueId:"PetWalk",},
-  {categoryName:"🍳 בישולים",valueId:"Cooking",},
-  {categoryName:"⬅️אחר",valueId:"Other",},
-]
+  { categoryName: "👩🏻‍🍼בייביסיטר ", valueId: "Babysitting" },
+  { categoryName: "🛻הסעות", valueId: "Drives" },
+  { categoryName: "🛒קניות לבית", valueId: "Shopping" },
+  { categoryName: " 🐈‍⬛טיול לחיות מחמד", valueId: "PetWalk" },
+  { categoryName: "🍳 בישולים", valueId: "Cooking" },
+  { categoryName: "⬅️אחר", valueId: "Other" }
+];
 
-
-
-for(let i = 0; i < categorysObject.length; i++){
-  const option = document.createElement("option")
-  option.text=categorysObject[i].categoryName
-  option.id = (categorysObject[i].valueId)
-  categorySelect.appendChild(option)
+for (let i = 0; i < categorysObject.length; i++) {
+  const option = document.createElement("option");
+  option.text = categorysObject[i].categoryName;
+  option.id = categorysObject[i].valueId;
+  categorySelect.appendChild(option);
 }
-console.log(form)
-form.addEventListener('submit', async(event) => {
+
+form.addEventListener('submit', async (event) => {
   event.preventDefault();
   let category = document.getElementById('select_page').value;
   let requestNote = document.getElementById('reqNotes').value;
-
+  let username = await getUsernameByEmail();  
+  console.log(username);
 
   await fetch('/requestPage/newCall', {
-      method:'Post',
-      Credential:'include',
-      headers:{'Content-Type': 'application/x-www-form-urlencoded'},
-      body:`category=${category}&date=${getCurrentDateTime()}&description=${requestNote}&name=${getUsernameByEmail()}`
-  })
-
- 
+    method: 'POST',
+    credentials: 'include',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: `category=${category}&date=${getCurrentDateTime()}&description=${requestNote}&name=${username}`
+  });
 });
-
-
-

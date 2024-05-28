@@ -9,3 +9,5 @@ profileTab.addEventListener('click', async() => {
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     })
 })
+
+let div = document.createElement("div");

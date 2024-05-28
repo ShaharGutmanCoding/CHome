@@ -42,7 +42,7 @@ function createCall(object) {
 
   // Create a span for the category
   let category = document.createElement("span");
-  category.textContent = object.category+"  :"+object.name;
+  category.textContent = object.name+"  :"+object.category;
   category.style.display = "block"; 
   category.style.textAlign = "center";
   category.style.textDecoration = "underline"; 

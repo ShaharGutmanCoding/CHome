@@ -6,7 +6,7 @@ const ticket = require('../../scheme/ticket');
 // const cookieParser = require('cookie-parser');
 
 router.get('/',(req,res) => {
-    const file = path.join(__dirname + '../../public/profilePage/profilePage.html');
+    const file = path.join(__dirname + '../../../public/profilePage/profilePage.html');
     res.sendFile(file);
 })
 
@@ -14,4 +14,7 @@ router.get('/',(req,res) => {
 router.get('/profileDetails', (req,res) =>{
     const logedUser = req.cookies.email;
     
-})
+});
+
+module.exports = router;
+
