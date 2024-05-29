@@ -24,6 +24,10 @@ const ticket = new mongoose.Schema({
         default:'',
         require: true,
     },
+    helpers:{
+        type: Array,
+        default: []
+    }
 })
 
 module.exports = mongoose.model('ticket',ticket);
