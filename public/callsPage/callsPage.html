@@ -39,7 +39,7 @@
     </style>
     <script>
       $(function () {
-          $("#header").load("./header/header.html");
+          $("#header").load("../header/header.html");
       });
     </script>
 
@@ -47,10 +47,16 @@
 </head>
 
 <body>
+  <div id="header"></div> <!-- do not remove this line -->
   <h1 class="text-center">All Requests</h1>
   <div class="container text-center">
     <h4 id="counter" class="text-center">there are 0 requests</h4>
-    <div id="requestsContainer"></div>
+    <div class="row justify-content-center mb-3">
+      <select id="select_page"  class="operator w-50 form-select text-center"> 
+          <option disabled selected> חפש קטגוריה</option> 
+      </select>
+  </div>
+    <div id="requestsContainer"></div> <!-- Corrected this line -->
   </div>
   
   <script src="./callsPage.js"></script>
@@ -60,65 +66,65 @@
 </html>
 
 <script>
-let counter = document.getElementById("counter");
-let requestsContainer = document.getElementById("requestsContainer");
+  let counter = document.getElementById("counter");
+  let requestsContainer = document.getElementById("requestsContainer");
 
-function createCall(object) {
-  let div = document.createElement("div");
-  div.classList.add("Request");
+  function createCall(object) {
+    let div = document.createElement("div");
+    div.classList.add("Request");
 
-  // Create a span for the prescription
-  let prescription = document.createElement("span");
-  prescription.textContent = object.category;
-  prescription.style.display = "block"; 
-  prescription.style.textAlign = "center";
-  prescription.style.textDecoration = "underline"; 
-  prescription.style.fontWeight = "bold";
-  div.appendChild(prescription);
+    // Create a span for the prescription
+    let prescription = document.createElement("span");
+    prescription.textContent = object.category;
+    prescription.style.display = "block"; 
+    prescription.style.textAlign = "center";
+    prescription.style.textDecoration = "underline"; 
+    prescription.style.fontWeight = "bold";
+    div.appendChild(prescription);
 
-  // Create a span for the description
-  let description = document.createElement("span");
-  description.textContent = object.description;
-  description.classList.add("description");
+    // Create a span for the description
+    let description = document.createElement("span");
+    description.textContent = object.description;
+    description.classList.add("description");
 
-  // Check if the description is too long
-  if (description.textContent.length > 100) {
-    let shortText = description.textContent.substring(0, 100);
-    let fullText = description.textContent;
+    // Check if the description is too long
+    if (description.textContent.length > 100) {
+      let shortText = description.textContent.substring(0, 100);
+      let fullText = description.textContent;
 
-    description.textContent = shortText + "...";
-    
-    let readMoreButton = document.createElement("span");
-    readMoreButton.textContent = "המשך קריאה";
-    readMoreButton.classList.add("show-more");
-    
-    readMoreButton.onclick = function() {
-      description.textContent = fullText;
-      readMoreButton.style.display = "none";
-    };
+      description.textContent = shortText + "...";
 
-    div.appendChild(description);
-    div.appendChild(readMoreButton);
-  } else {
-    div.appendChild(description);
+      let readMoreButton = document.createElement("span");
+      readMoreButton.textContent = "המשך קריאה";
+      readMoreButton.classList.add("show-more");
+
+      readMoreButton.onclick = function() {
+        description.textContent = fullText;
+        readMoreButton.style.display = "none";
+      };
+
+      div.appendChild(description);
+      div.appendChild(readMoreButton);
+    } else {
+      div.appendChild(description);
+    }
+
+    // Create a span for the date
+    let date = document.createElement("span");
+    date.textContent = object.date;
+    date.style.display = "block"; 
+    date.style.fontSize = "10px"; 
+    date.style.textAlign = "left"; 
+    div.appendChild(date);
+
+    requestsContainer.appendChild(div);
   }
 
-  // Create a span for the date
-  let date = document.createElement("span");
-  date.textContent = object.date;
-  date.style.display = "block"; 
-  date.style.fontSize = "10px"; 
-  date.style.textAlign = "left"; 
-  div.appendChild(date);
-
-  requestsContainer.appendChild(div);
-}
-
-fetch('/callsPage/getCalls')
-.then(response => response.json())
-.then(data => {
-  counter.innerHTML = "There are " + data.length + " requests";
-  for (let i = 0; i < data.length; i++)
-    createCall(data[i]);
-});
+  fetch('/callsPage/getCalls')
+  .then(response => response.json())
+  .then(data => {
+    counter.innerHTML = "There are " + data.length + " requests";
+    for (let i = 0; i < data.length; i++)
+      createCall(data[i]);
+  });
 </script>
