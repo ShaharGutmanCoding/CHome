@@ -16,55 +16,45 @@
   <body>
   <div id="header"></div>
   <div class="container ">
-    <h1 class="main-title" class="text-center">בקשת עזרה</h1>
-    <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
-        <p class="paragraph">
-            השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
-        </p>
+    <!-- This is the explanation-->
+    <div class="row">
+      <h1 class="main-title" class="text-center">בקשת עזרה</h1>
+      <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
+          <p class="paragraph">
+              השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+          </p>
+      </div>
     </div>
-    <form id="formSelect">
-      <div class="border p-4 rounded-3 ">
+  </div>
+  <!-- form   -->
+  <div class="container">
+    <form class="border p-4 rounded-3" id="formSelect">
+
       <div class="row justify-content-center mb-3">
           <select id="select_page"  class="operator w-50 form-select text-center"> 
               <option disabled selected> קטגוריות</option> 
           </select>
       </div>
-      
-      <div class="input-group">
-        <div class="input-group-text">
-          <input class="form-check-input mt-0" type="radio" value="" aria-label="Radio button for following text input">
-        </div>
-        <input type="text" class="form-control" aria-label="Text input with radio button">
+
+      <div class="row text-end ">
+        <p class="second-title">: צורך בקשה </p>
       </div>
-      
-      <div>
+      <div class="row">
         <div class="form-check form-check-inline">
           <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
           <label class="form-check-label" for="inlineRadio1">1</label>
         </div>
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label" for="inlineRadio2">2</label>
-        </div>
-      </div>
-      <div>
-        <p class="second-title">: צורך בקשה </p>
-        <input type="checkbox">
       </div>
       
-        <div class="mb-3">
-          <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
-        </div>
-        <div class="row justify-content-center mb-3">
-          <div class="col-auto">
-            <!-- Button from Bootstrap -->
-            <!-- <button type="submit" class="btn btn-primary" id="submit">שליחת בקשה</button> -->
-          </div>
-        </div>
+      <div class="mb-3">
+        <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
       </div>
       <input type="submit" class="btn btn-primary" id="submit">
-  </form>
+
+    </form>
   </div>
+
+  <!-- Popup modal (work on it later)-->
   <div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
