@@ -3,6 +3,7 @@ const express = require('express');
 const router = Router();
 const path = require('path');
 const ticket = require('../../scheme/ticket');
+const users = require('../../scheme/users');
 
 // router.use((req,res,next) => {
 //     if(req.cookies?.isLogged){
@@ -23,13 +24,18 @@ router.post('/newCall',async(req,res) => {
     let category = req.body?.category;
     let date = req.body?.date;
     let description = req.body?.description;
+    let name = req.body?.name;
 
     if(category && date && description && loggedUser){    
-        await ticket.create({category: category, date: date, description: description, createdBy: loggedUser,})
-        res.statusCode(200).send('ticket created succsessfully');
-    }else{
-        res.statusCode(503).send('cant create ticket');
+        await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
     }
 });
+
+router.post('/getUserName',async(req,res)=>{
+    let email = req.body?.email;
+    const user = await users.findOne({email: email});
+console.log(user)
+res.json(user);
+})
 
 module.exports = router;
