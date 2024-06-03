@@ -32,7 +32,7 @@ router.post("/addHelper",async (req,res)=>{
     const update = {
       $push: { helpers: helper.firstName}
     };
-await ticket.updateOne(filter,update);
-res.end();
+    await ticket.updateOne(filter,update);
+    res.end();
 })
 module.exports = router;
