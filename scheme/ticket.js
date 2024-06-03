@@ -1,6 +1,11 @@
 const mongoose = require('mongoose');
 
 const ticket = new mongoose.Schema({
+    name:{
+        type:String,
+        default:'anonymous',
+        require: true,
+    },
     category:{
         type:String,
         default:'',
@@ -19,6 +24,10 @@ const ticket = new mongoose.Schema({
         default:'',
         require: true,
     },
+    helpers:{
+        type: Array,
+        default: []
+    }
 })
 
 module.exports = mongoose.model('ticket',ticket);
