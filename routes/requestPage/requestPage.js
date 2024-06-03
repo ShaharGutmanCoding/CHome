@@ -18,12 +18,14 @@ router.get('/',(req,res) => {
 });
 
 router.post('/newCall',async(req,res) => {
+    const loggedUser = req.cookies?.email;
+
     let category = req.body?.category;
     let date = req.body?.date;
     let description = req.body?.description;
 
-    if(category && date && description){    
-        await ticket.create({category: category, date: date, description: description,})
+    if(category && date && description && loggedUser){    
+        await ticket.create({category: category, date: date, description: description, createdBy: loggedUser,})
         res.statusCode(200).send('ticket created succsessfully');
     }else{
         res.statusCode(503).send('cant create ticket');
