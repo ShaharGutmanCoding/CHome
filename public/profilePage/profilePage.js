@@ -45,7 +45,7 @@ async function getUserDetails(){
 
         // Create a span for the prescription
         let prescription = document.createElement("span");
-        prescription.textContent = object.category;
+        // prescription.textContent = object.category;
         prescription.style.display = "block"; 
         prescription.style.textAlign = "center";
         prescription.style.textDecoration = "underline"; 
@@ -54,7 +54,7 @@ async function getUserDetails(){
 
         // Create a span for the description
         let description = document.createElement("span");
-        description.textContent = object.description;
+        // description.textContent = object.description;
         description.classList.add("description");
 
         // Check if the description is too long
@@ -81,7 +81,7 @@ async function getUserDetails(){
 
         // Create a span for the date
         let date = document.createElement("span");
-        date.textContent = object.date;
+        // date.textContent = object.date;
         date.style.display = "block"; 
         date.style.fontSize = "10px"; 
         date.style.textAlign = "left"; 
