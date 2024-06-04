@@ -4,7 +4,16 @@ const router = Router();
 const path = require('path');
 const ticket = require('../../scheme/ticket');
 const users = require('../../scheme/users');
+const cookieParser = require('cookie-parser');
 // const cookieParser = require('cookie-parser');
+
+router.use('/',(req,res,next) => {
+    if (!req.cookies?.isLogged) {
+        res.redirect('/error');
+        return ;
+    }
+    next();
+})
 
 router.get('/',(req,res) => {
     const file = path.join(__dirname + '../../../public/profilePage/profilePage.html');

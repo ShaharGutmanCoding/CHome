@@ -27,9 +27,9 @@ form.addEventListener('submit', async(event) => {
     .then(data=>{
         if(data.flag){
             window.location.href = data.router;
-console.log(getCookie('firstName'));
         }
-        else
-        failTry.textContent = data.error;
+        else{
+          failTry.textContent = data.error;
+        }
     })
 })
