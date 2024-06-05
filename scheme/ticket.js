@@ -17,6 +17,7 @@ const ticket = new mongoose.Schema({
     },
     createdBy:{
         type:String,
+        default:'',
         require: true,
     },
     description:{
@@ -26,7 +27,7 @@ const ticket = new mongoose.Schema({
     },
     helpers:{
         type: Array,
-        default: []
+        default: [],
     }
 })
 
