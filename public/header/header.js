@@ -8,6 +8,7 @@ function getCookie(name) {
     }
     return null;
 }
+
 let login = document.getElementById('login');
 let register = document.getElementById('register');
 console.log(getCookie('isLogged'));
