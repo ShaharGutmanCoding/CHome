@@ -51,6 +51,7 @@ form.addEventListener('submit', async (event) => {
   event.preventDefault();
   let category = document.getElementById('select_page').value;
   let requestNote = document.getElementById('reqNotes').value;
+
   let username = await getUsernameByEmail();  
   console.log(username);
 

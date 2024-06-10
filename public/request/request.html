@@ -1,136 +1,76 @@
+
 <!DOCTYPE html>
 <html>
-<head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <meta charset="UTF-8">
-    <link rel="stylesheet" href="../global.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Request Page</title>
-    <script>
+  <head>
+      <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+      <meta charset="UTF-8">
+      <link rel="stylesheet" href="../global.css">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Request Page</title>
+      <script>
         $(function(){
-            $('#header').load('/header/header.html')
+          $('#header').load('/header/header.html')
         })
-    </script>
-    <script>
-        function toggleToolInput() {
-            var checkbox = document.getElementById("chooseYesOption");
-            var inputContainer = document.getElementById("toolInputContainer");
-            if (checkbox.checked) {
-                inputContainer.style.display = "block";
-            } else {
-                inputContainer.style.display = "none";
-            }
-        }
-
-        function toggleProficientInput() {
-            var checkbox = document.getElementById("profficentYes");
-            var inputContainer = document.getElementById("proficientInputContainer");
-            if (checkbox.checked) {
-                inputContainer.style.display = "block";
-            } else {
-                inputContainer.style.display = "none";
-            }
-        }
-    </script>
-    <style>
-        .row {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-end;
-            margin: 20px;
-        }
-        .form-check {
-            margin-right: 10px;
-        }
-        .second-title {
-            font-size: 18px;
-            margin-bottom: 10px;
-        }
-        .mb-3 {
-            margin: 20px;
-        }
-    </style>
-</head>
-<body>
-<div id="header"></div>
-<div class="container ">
-    <!-- This is the explanation-->
-    <div class="row">
-        <h1 class="main-title" class="text-center">בקשת עזרה</h1>
-        <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
-            <p class="paragraph">
-                השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
-            </p>
-        </div>
+      </script>
+  </head>
+  <body>
+  <div id="header"></div>
+  <div class="container ">
+    <h1 class="main-title" class="text-center">בקשת עזרה</h1>
+    <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
+        <p class="paragraph">
+            השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+        </p>
     </div>
-</div>
-<!-- form   -->
-<div class="container">
-    <form class="border p-4 rounded-3" id="formSelect">
+    <form id="formSelect">
+      <div class="border p-4 rounded-3 ">
+      <div class="row justify-content-center mb-3">
+          <select id="select_page"  class="operator w-50 form-select text-center"> 
+              <option disabled selected> קטגוריות</option> 
+          </select>
+      </div>
 
-        <div class="row justify-content-center mb-3">
-            <select id="select_page"  class="operator w-50 form-select text-center">
-                <option disabled selected> קטגוריות</option>
-            </select>
-        </div>
-
-        <div class="row text-end ">
-            <p class="second-title">: צורך בקשה </p>
-        </div>
-        <div class="row text-end">
-            <p class="second-title">האם יש צורך בכלי עבודה</p>
-            <div class="d-flex justify-content-end">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="toolRequired" id="chooseYesOption" onchange="toggleToolInput()">
-                    <label class="form-check-label" for="chooseYesOption">כן</label>
-                </div>
-            </div>
-            <div id="toolInputContainer" style="display: none;">
-                <input type="text" id="toolInput" placeholder="הכנס כלי עבודה">
-            </div>
-        </div>
-
-        <div class="row text-end">
-            <p class="second-title">האם יש צורך בבעל מקצוע</p>
-            <div class="d-flex justify-content-end">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" name="proficientRequired" id="profficentYes" onchange="toggleProficientInput()">
-                    <label class="form-check-label" for="profficentYes">כן</label>
-                </div>
-            </div>
-            <div id="proficientInputContainer" style="display: none;">
-                <input type="text" id="proficientInput" placeholder="הכנס מקצוע">
-            </div>
-        </div>
-
+      
         <div class="mb-3">
-            <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+          <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
         </div>
-        <input type="submit" class="btn btn-primary" id="submit">
-    </form>
-</div>
-
-<div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
+        <div class="row justify-content-center mb-3">
+          <div class="col-auto">
+            <!-- Button from Bootstrap -->
+            <!-- <button type="submit" class="btn btn-primary" id="submit">שליחת בקשה</button> -->
+          </div>
+        </div>
+      </div>
+      <input type="submit" class="btn btn-primary" id="submit">
+  </form>
+  </div>
+  <div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title justify-content-end  ">הבקשה נשלחה</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div id="modalBody" class="modal-body ">
-                <div class="text-end">
-                    <p id="modalCategory">:קטגוריה</p>
-                    <p id="modalDate">:תאריך בקשה</p>
-                    <p id="modalNoteReq">:הערות לבקשה</p>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title justify-content-end  ">הבקשה נשלחה</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+        <div id="modalBody" class="modal-body ">
+          <div class="text-end">
+            <p id="modalCategory">:קטגוריה</p>
+            <p id="modalDate">:תאריך בקשה</p>
+            <p id="modalNoteReq">:הערות לבקשה</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
     </div>
-</div>
-</body>
-<script src="./request.js"></script>
+  </div>
+  </body>
+
+  
+  
+
+
+<script src="./request/request.js"></script>
+
 </html>

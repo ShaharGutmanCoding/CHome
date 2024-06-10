@@ -15,6 +15,7 @@ console.log(getCookie('isLogged'));
 if (getCookie('isLogged')) {
     login.textContent = 'my Profile';
     login.setAttribute('href', '/profilePage');
+    register.textContent = "";
 } else {
     login.textContent = 'login';
     login.setAttribute('href', '/loginSystem/login');
