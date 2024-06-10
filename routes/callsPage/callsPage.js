@@ -30,7 +30,7 @@ router.post("/addHelper",async (req,res)=>{
 
     const filter = { _id: givenID }; 
     const update = {
-      $push: { helpers: helper.firstName}
+      $push: { helpers: helper.email}
     };
     await ticket.updateOne(filter,update);
     res.end();
