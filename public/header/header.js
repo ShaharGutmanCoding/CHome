@@ -16,6 +16,8 @@ if (getCookie('isLogged')) {
     login.textContent = 'my Profile';
     login.setAttribute('href', '/profilePage');
     register.textContent = "";
+    
+    let firstName = getCookie('firstName');
 } else {
     login.textContent = 'login';
     login.setAttribute('href', '/loginSystem/login');

@@ -104,10 +104,27 @@ router.post('/changeUserDetails', async(req,res) => {
 
 })
 
+router.post('/deleteCall', async(req,res) => {
+    let _id = req.body?._id;
+    const documents = await ticket.find({_id: _id});
+    console.log(documents);
+    console.log(_id);
+
+    if(documents){
+        await ticket.deleteOne({_id: _id});
+        console.log('request deleted successfully');
+        res.send('request deleted successfully');
+    }else{
+        console.log('error');
+        res.send(null);
+    }
+})
+
 router.get('/calls', async (req,res) => {
     const loggedUser = req.cookies?.email;
     
 })
+
 
 
 module.exports = router;
