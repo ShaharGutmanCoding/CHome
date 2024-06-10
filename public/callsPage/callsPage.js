@@ -20,6 +20,14 @@ for (let i = 0; i < categorysObject.length; i++) {
 let counter = document.getElementById("counter");
 let requestsContainer = document.getElementById("requestsContainer");
 
+function requestAnswerd(answerRequestBtn){
+  answerRequestBtn.style.backgroundColor = "gray";
+  answerRequestBtn.style.borderColor = "gray";
+  answerRequestBtn.style.cursor = "default"
+  answerRequestBtn.textContent = "Request was granted"
+  answerRequestBtn.onclick = function () {};
+}
+
 function fixEmailAdress(value) {
   return value.replace("%40", "@");
 }
@@ -83,11 +91,18 @@ function createCall(object) {
   answerRequestDiv.style.marginTop = "10px";
 
   let answerRequestBtn = document.createElement("button");
+  answerRequestBtn.id = object._id;
   answerRequestBtn.textContent = "Answer Request";
   answerRequestBtn.classList.add("btn", "btn-primary", "btn-sm");
   answerRequestBtn.onclick = function () {
-    acceptHelp(object._id, answerRequestBtn,getCookie("email"));
+    acceptHelp(object._id);
   };
+  object.helpers.forEach(helper=>{
+    if(helper === fixEmailAdress(getCookie("email"))){
+      requestAnswerd(answerRequestBtn);
+    }
+
+});
 
   answerRequestDiv.appendChild(answerRequestBtn);
   div.appendChild(answerRequestDiv);
@@ -111,16 +126,19 @@ fetch('/callsPage/getCalls')
     }
   });
 
-async function acceptHelp(givenID, button, email) {
+async function acceptHelp(givenID) {
+
+  let btn = document.getElementById(givenID);
+requestAnswerd(btn);
 
   var helperEmail = fixEmailAdress(getCookie("email"));
-
   await fetch("/callsPage/addHelper", {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `helperEmail=${helperEmail}&givenID=${givenID}`
-  });
-
+  })
+  
+  
 
 }
