@@ -98,12 +98,29 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane fade justify-content-center" id="nav-request" role="tabpanel" aria-labelledby="nav-request-tab" tabindex="0">
+          <div class="tab-pane fade justify-content-center" id="nav-request" role="tabpanel" style="text-align: center;" aria-labelledby="nav-request-tab" tabindex="0">
             <div class="row" id="requestContainer"></div>
             <div class="spinner-border text-warning justify-content-center" id="loading" role="status">
               <span class="visually-hidden">Loading...</span>
             </div>
-            <div class="container text-container" id="errorMessage"></div>
+            <div class="modal fade" id="UniqueModalId" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">              
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title">מחיקת בקשה</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>?האם אתה בטוח שברצונך למחוק את הבקשה</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="buttonfalse">סגור</button>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="buttonTrue">מחק בקשה</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container text-container justify-content-center" id="errorMessage" style="display: none;">לא נמצאו בקשות</div>
           </div>
           <div class="tab-pane fade" id="nav-calls" role="tabpanel" aria-labelledby="nav-calls-tab" tabindex="0"></div>
         </div>

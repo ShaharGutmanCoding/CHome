@@ -13,11 +13,17 @@ let city = document.getElementById('city');
 let region = document.getElementById('region');
 let loading = document.getElementById('loading');
 let save = document.getElementById('saveButton');
+let errorMessage = document.getElementById('errorMessage');
+let confirmButton = document.getElementById('buttonTrue');
+let myModal = document.getElementById('UniqueModalId');
 
 let user,request;
 
 getUserDetails();
 async function getUserDetails(){
+    loading.style.display = 'block';
+    requestsContainer.innerHTML = '';
+
     user = await fetch('/profilePage/profileDetails',{
         method: 'Get',
         Credential:'include',
@@ -31,6 +37,7 @@ async function getUserDetails(){
     })
     .then(response => response.json())
     
+    console.log(request);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
@@ -39,7 +46,8 @@ async function getUserDetails(){
     city.value = user.city;
     region.value = user.region;
 
-    if (request) {
+    if (request.length > 0) {
+        console.log('printing requests')
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             // create delete button
@@ -51,6 +59,8 @@ async function getUserDetails(){
             deleteButton.setAttribute('class','btn btn-outline-danger');
             deleteButton.setAttribute('id',element._id);
             deleteButtonDiv.appendChild(deleteButton);
+            deleteButton.setAttribute('data-bs-toggle', "modal")
+            deleteButton.setAttribute('data-bs-target',"#UniqueModalId")
             deleteButton.onclick = function () {
                 deleteCall(element._id)
             }
@@ -111,8 +121,9 @@ async function getUserDetails(){
     
         });
     }else{
-        let errorMessage = document.getElementById('errorMessage');
-        errorMessage.textContent = 'לא נמצאו בקשות';
+        console.log('request not found');
+        loading.style.display = 'none';
+        errorMessage.style.display = 'block';
     }
 
 }
@@ -141,12 +152,14 @@ save.addEventListener('click', async(event) => {
 })
 
 async function deleteCall(givenId){
-   await fetch('/profilePage/deleteCall', {
-    method: 'Post',
-    Credential:'include',
-    headers:{'Content-Type': 'application/x-www-form-urlencoded'},
-    body:`_id=${givenId}`,
-   }).then(response => response.text())
-
-   getUserDetails();
+    confirmButton.addEventListener('click', async()=>{
+        await fetch('/profilePage/deleteCall', {
+         method: 'Post',
+         Credential:'include',
+         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+         body:`_id=${givenId}`,
+        }).then(response => response.text())
+        
+        getUserDetails();
+    });
 }
