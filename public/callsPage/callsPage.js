@@ -2,6 +2,7 @@ var categorySelect = document.getElementById("select_page");
 const form = document.getElementById('formSelect');
 
 let categorysObject = [
+  { categoryName: "הכל"},
   { categoryName: "👩🏻‍🍼בייביסיטר ", valueId: "Babysitting" },
   { categoryName: "🛻הסעות", valueId: "Drives" },
   { categoryName: "🛒קניות לבית", valueId: "Shopping" },
@@ -139,6 +140,30 @@ requestAnswerd(btn);
     body: `helperEmail=${helperEmail}&givenID=${givenID}`
   })
   
-  
-
 }
+
+categorySelect.addEventListener("change",async() => {
+let selected = categorySelect.value;
+
+await fetch('/callsPage/getCalls')
+.then(response => response.json())
+.then(data => {
+  requestsContainer.innerHTML="";
+for(let i=0; i<data.length; i++){
+  if(selected==="הכל"){
+    createCall(data[i])
+  }
+
+  else{
+
+  if (data[i].category===selected){
+    createCall(data[i])
+  }
+}
+};
+if(requestsContainer.innerHTML==="")
+  requestsContainer.innerHTML="לא נמצאו קריאות"
+});
+
+
+});
