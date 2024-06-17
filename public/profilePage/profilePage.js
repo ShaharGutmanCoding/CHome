@@ -153,7 +153,7 @@ async function getUserDetails(){
             deleteButton.setAttribute('data-bs-toggle', "modal")
             deleteButton.setAttribute('data-bs-target',"#UniqueModalId2") 
             deleteButton.onclick = function () {
-                deleteCall()
+                deleteCall(element._id)
             }
 
             let div = document.createElement("div");
@@ -246,7 +246,7 @@ async function deleteRequest(givenId){
     confirmButton.addEventListener('click', async()=>{
         await fetch('/profilePage/deleteRequest', {
          method: 'Post',
-         Credential:'include',
+         Credentials:'include',
          headers:{'Content-Type': 'application/x-www-form-urlencoded'},
          body:`_id=${givenId}`,
         }).then(response => response.text())
@@ -255,12 +255,13 @@ async function deleteRequest(givenId){
     });
 }
 
-async function deleteCall(){
+async function deleteCall(givenId){
     confirmButton2.addEventListener('click', async()=>{
         await fetch('/profilePage/deleteCall', {
          method: 'Post',
-         Credential:'include',
+         Credentials:'include',
          headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+         body:`_id=${givenId}`,
         }).then(response => response.text())
         
         getUserDetails();

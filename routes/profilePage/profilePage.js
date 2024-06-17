@@ -134,13 +134,15 @@ router.get('/calls', async (req,res) => {
 })
 
 router.post('/deleteCall', async(req,res) => {
+    let _id = req.body?._id;
     const loggedUser = req.cookies?.email;
     const documents = await ticket.find({helpers: loggedUser});
     console.log(documents);
+    console.log(_id);
 
     if(documents){
         await ticket.updateOne(
-            { helpers: loggedUser },
+            { _id: _id },
             { $pull: { helpers: loggedUser } }
         );
         res.send('call deleted successfully');

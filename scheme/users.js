@@ -42,7 +42,7 @@ const users = new mongoose.Schema({
     },
 
     phoneNum:{
-        type:Number,
+        type:String,
         default:0,
     },
 })
