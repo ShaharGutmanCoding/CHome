@@ -10,20 +10,18 @@ router.get('/',(req,res) => {
 })
 
 router.post('/createUser', async(req,res) => {
-    console.log('creating user');
-    let firstName = req.body?.firstName;
-    let lastName = req.body?.lastName;
-    let password = req.body?.password;
-    let region = req.body?.region;
-    let city = req.body?.city;
-    let id = req.body?.id;
-    let phoneNum = req.body?.phoneNum;
-    let email = req.body?.email;
+    const {firstName, password, lastName, region, city, id, phoneNum, email} = req.body;
 
-    console.log(firstName);
     if (firstName && lastName && password && region && city && id && phoneNum && email ) {
-        let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email});
-        res.send(response);
+        try{
+            let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email});
+            res.send(response);
+            return;
+        }
+        catch(err){
+            console.error(err);
+        }
     }
 })
+
 module.exports = router;

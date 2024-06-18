@@ -20,11 +20,7 @@ router.get('/',(req,res) => {
 
 router.post('/newCall',async(req,res) => {
     const loggedUser = req.cookies?.email;
-
-    let category = req.body?.category;
-    let date = req.body?.date;
-    let description = req.body?.description;
-    let name = req.body?.name;
+    const{category, date, description, name} = req.body;
 
     if(category && date && description && loggedUser){    
         await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
@@ -33,9 +29,15 @@ router.post('/newCall',async(req,res) => {
 
 router.post('/getUserName',async(req,res)=>{
     let email = req.body?.email;
-    const user = await users.findOne({email: email});
-console.log(user)
-res.json(user);
+
+    try{
+        const user = await users.findOne({email: email});
+        res.json(user);
+    }
+    catch(err){
+        console.error(err);
+        res.send('server error');
+    }
 })
 
 module.exports = router;

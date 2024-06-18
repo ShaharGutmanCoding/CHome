@@ -32,19 +32,19 @@ async function getUserDetails(){
 
     user = await fetch('/profilePage/profileDetails',{
         method: 'Get',
-        Credential:'include',
+        Credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
 
     request = await fetch('/profilePage/request',{
         method: 'Get',
-        Credential:'include',
+        Credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
 
     calls = await fetch('/profilePage/calls',{
         method: 'Get',
-        Credential:'include',
+        credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
     

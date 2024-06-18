@@ -20,29 +20,6 @@ router.get('/',(req,res) => {
     res.sendFile(file);
 })
 
-async function findByEmail(email){
-    const documents = await users.findOne({email: email});
-    if(documents){
-        console.log(JSON.stringify(documents));
-        return documents;
-    }
-    else{
-        console.log('user not found')
-        return false;
-    }
-}
-
-async function checkIfEmailExist(email, loggedUser){
-    const documents = await users.findOne({email: email});
-    if(documents.email == loggedUser || !documents){
-        console.log('doesnt exist');
-        return false;
-    }else{
-        console.log('exist');
-        return true;
-    }
-}
-
 router.get('/profileDetails', async (req,res) =>{
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
@@ -52,106 +29,116 @@ router.get('/profileDetails', async (req,res) =>{
 
 router.get('/request', async (req,res) => {
     const loggedUser = req.cookies?.email;
-    const documents = await ticket.find({createdBy: loggedUser});
-    console.log(documents);
-    if(documents){
-        console.log(documents);
+    try{
+        const documents = await ticket.find({createdBy: loggedUser});
         res.json(documents);
-    }else{
+        return;
+    }
+    catch(err){
+        console.error(err);
         res.send(null);
     }
+
+    res.end();
 })
 
 router.post('/changeUserDetails', async(req,res) => {
-    console.log('changing user info');
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
-
-    console.log(user);
-
-    let firstName = req.body?.firstName;
-    let lastName = req.body?.lastName;
-    let region = req.body?.region;
-    let city = req.body?.city;
-    let id = req.body?.id;
-    let phoneNum = req.body?.phoneNum;
-    let email = req.body?.email;
-
-    console.log(firstName, lastName, id, region, city, phoneNum, email);
+    const {firstName, lastName, region, city, id, phoneNum, email} = req.body;
 
     let isEmailExist = await checkIfEmailExist(email, loggedUser);
 
-    if (firstName && lastName && region && city && id && phoneNum && email && !isEmailExist){
-        console.log('change');
-        user.firstName = firstName;
-        user.lastName = lastName;
-        user.region = region;
-        user.city = city;
-        user.id = id;
-        user.phoneNum = phoneNum;
-        user.email = email;
-        user.save();
-        res.send('user info updated successfully')
-    }else if(isEmailExist){
-        console.log('email exist');
+    if(isEmailExist){
         res.send('email already exist in db, try another email');
+        return;
+    }
+    if (firstName && lastName && region && city && id && phoneNum && email){
+        try{
+            user.firstName = firstName;
+            user.lastName = lastName;
+            user.region = region;
+            user.city = city;
+            user.id = id;
+            user.phoneNum = phoneNum;
+            user.email = email;
+            await user.save();
+            res.send('user info updated successfully')
+            return;
+        }catch(err){
+            console.error(err);
+        }
     }else{
-        console.log('general error');
         res.send('something went wrong, try again later');
     }
-
-    console.log(user);
-
 })
 
 router.post('/deleteRequest', async(req,res) => {
     let _id = req.body?._id;
-    const documents = await ticket.find({_id: _id});
-    console.log(documents);
-    console.log(_id);
 
-    if(documents){
+    try{
         await ticket.deleteOne({_id: _id});
-        console.log('request deleted successfully');
         res.send('request deleted successfully');
-    }else{
-        console.log('error');
+        return;
+    }
+    catch(err){
+        console.error(err);
         res.send(null);
     }
 })
 
 router.get('/calls', async (req,res) => {
     const loggedUser = req.cookies?.email;
-    const documents = await ticket.find({helpers: loggedUser});
-    console.log(documents);
 
-    if (documents) {
+    try{
+        const documents = await ticket.find({helpers: loggedUser});
         res.json(documents);
-    }else{
+        return;
+    }
+    catch(err){
+        console.error(err);
         res.send(null);
     }
-
 })
 
 router.post('/deleteCall', async(req,res) => {
     let _id = req.body?._id;
     const loggedUser = req.cookies?.email;
-    const documents = await ticket.find({helpers: loggedUser});
-    console.log(documents);
-    console.log(_id);
 
-    if(documents){
+    try{
         await ticket.updateOne(
             { _id: _id },
             { $pull: { helpers: loggedUser } }
         );
         res.send('call deleted successfully');
-    }else{
-        console.log('error');
-        res.send(null);
+        return;
+    }
+    catch(err){
+        console.error(err);
+        re.send(null);
     }
 })
 
+async function findByEmail(email){
+    try{
+        const documents = await users.findOne({email: email});
+        return documents;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
 
+async function checkIfEmailExist(email, loggedUser){
+    const documents = await users.findOne({email: email});
+    if(documents.email == loggedUser || !documents){
+        // email doesnt exist
+        return false;
+    }else{
+        //email exist
+        return true;
+    }
+}
 
 module.exports = router;
