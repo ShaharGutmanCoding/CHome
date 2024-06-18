@@ -267,3 +267,6 @@ async function deleteCall(givenId){
         getUserDetails();
     });
 }
+
+
+//קריאות

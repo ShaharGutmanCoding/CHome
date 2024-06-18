@@ -28,7 +28,7 @@ router.get("/getCalls", async(req,res)=>{
     }
 });
 
-router.post("/addHelper",async (req,res)=>{
+router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     const{helperEmail, givenID} = req.body;
 
     const filter = { _id: givenID }; 
@@ -44,5 +44,4 @@ router.post("/addHelper",async (req,res)=>{
         console.error(err);
     }
 })
-
 module.exports = router;
