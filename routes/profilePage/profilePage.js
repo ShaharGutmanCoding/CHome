@@ -104,7 +104,7 @@ router.post('/changeUserDetails', async(req,res) => {
 
 })
 
-router.post('/deleteCall', async(req,res) => {
+router.post('/deleteRequest', async(req,res) => {
     let _id = req.body?._id;
     const documents = await ticket.find({_id: _id});
     console.log(documents);
@@ -122,7 +122,34 @@ router.post('/deleteCall', async(req,res) => {
 
 router.get('/calls', async (req,res) => {
     const loggedUser = req.cookies?.email;
-    
+    const documents = await ticket.find({helpers: loggedUser});
+    console.log(documents);
+
+    if (documents) {
+        res.json(documents);
+    }else{
+        res.send(null);
+    }
+
+})
+
+router.post('/deleteCall', async(req,res) => {
+    let _id = req.body?._id;
+    const loggedUser = req.cookies?.email;
+    const documents = await ticket.find({helpers: loggedUser});
+    console.log(documents);
+    console.log(_id);
+
+    if(documents){
+        await ticket.updateOne(
+            { _id: _id },
+            { $pull: { helpers: loggedUser } }
+        );
+        res.send('call deleted successfully');
+    }else{
+        console.log('error');
+        res.send(null);
+    }
 })
 
 
