@@ -22,17 +22,27 @@ router.get("/getCalls", async(req,res)=>{
     res.json(calls);
 });
 
-router.post("/addHelper",async (req,res)=>{
+router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     let helperEmail = req.body?.helperEmail;
     let givenID = req.body?.givenID;
     let helper = await users.findOne({email: helperEmail});
     console.log(helper.firstName+ " is willing to help to the user " +givenID);
 
-    const filter = { _id: givenID }; 
-    const update = {
+    let filter = { _id: givenID }; 
+    let update = {
       $push: { helpers: helper.email}
     };
     await ticket.updateOne(filter,update);
+
+    filter = { email: helperEmail }; 
+    update = {
+      $push: { helpingSuggestions: givenID}
+    };
+    await users.updateOne(filter,update);
+
+
     res.end();
 })
+
+
 module.exports = router;

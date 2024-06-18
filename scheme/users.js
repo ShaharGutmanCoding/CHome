@@ -45,6 +45,10 @@ const users = new mongoose.Schema({
         type:Number,
         default:0,
     },
+    helpingSuggestions:{
+        type: Array,
+        default: [],
+    }
 })
 
 module.exports = mongoose.model('usersChome',users);

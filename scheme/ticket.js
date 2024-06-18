@@ -28,6 +28,10 @@ const ticket = new mongoose.Schema({
     helpers:{
         type: Array,
         default: [],
+    },
+    hasAnswered:{
+        type: Boolean,
+default: false,
     }
 })
 
