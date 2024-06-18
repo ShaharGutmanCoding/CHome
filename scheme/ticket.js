@@ -29,9 +29,9 @@ const ticket = new mongoose.Schema({
         type: Array,
         default: [],
     },
-    hasAnswered:{
-        type: Boolean,
-default: false,
+    status:{
+        type: String,
+default: "waiting for helper",
     }
 })
 

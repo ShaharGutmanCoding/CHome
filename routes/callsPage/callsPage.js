@@ -37,11 +37,24 @@ router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     };
     try{
         await ticket.updateOne(filter,update);
-        res.end();
         return;
     }
     catch(err){
         console.error(err);
     }
+    await ticket.updateOne(filter,update);
+
+    filter = { email: helperEmail }; 
+    update = {
+      $push: { helpingSuggestions: givenID}
+    };
+    await users.updateOne(filter,update);
+
+    let helpedTicket = await ticket.findOne({_id: givenID});
+    if(helpedTicket.status==="waiting for helper"){
+        helpedTicket.status="waiting for a response from the sender"
+        helpedTicket.save()
+    }
+    res.end();
 })
 module.exports = router;
