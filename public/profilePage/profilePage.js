@@ -28,7 +28,7 @@ async function getUserDetails(){
     requestLoading.style.display = 'block';
     callsLoading.style.display = 'block';
     requestsContainer.innerHTML = '';
-    callsContainer.innerHTML = '';
+    callsContainer.innerHTML = ''
 
     user = await fetch('/profilePage/profileDetails',{
         method: 'Get',
@@ -205,6 +205,14 @@ async function getUserDetails(){
             date.style.fontSize = "10px"; 
             date.style.textAlign = "center"; 
             div.appendChild(date);
+
+            let status = document.createElement("span");
+            status.textContent = `Status: ${element.status}`;
+            status.style.display = "block";
+            status.style.fontSize = "16px";
+            status.style.textAlign = "center";
+            status.style.color = "green"; 
+            div.appendChild(status);
     
             callsContainer.appendChild(div);
             callsContainer.appendChild(deleteButtonDiv);

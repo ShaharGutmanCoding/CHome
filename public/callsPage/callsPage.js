@@ -133,7 +133,7 @@ async function acceptHelp(givenID) {
 requestAnswerd(btn);
 
   var helperEmail = fixEmailAdress(getCookie("email"));
-  await fetch("/callsPage/addHelper", {
+  await fetch("/callsPage/addHelperAndHelpingSuggestion", {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },

@@ -40,7 +40,11 @@ router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     };
     await users.updateOne(filter,update);
 
-
+    let helpedTicket = await ticket.findOne({_id: givenID});
+    if(helpedTicket.status==="waiting for helper"){
+        helpedTicket.status="waiting for a response from the sender"
+        helpedTicket.save()
+    }
     res.end();
 })
 
