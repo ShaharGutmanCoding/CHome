@@ -1,5 +1,7 @@
 var categorySelect = document.getElementById("select_page");
 const form = document.getElementById('formSelect');
+const errorContainer = document.getElementById('errorContainer');
+
 
 function fixEmailAdress(value) {
   return value.replace("%40", "@");
@@ -60,5 +62,7 @@ form.addEventListener('submit', async (event) => {
     credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `category=${category}&date=${getCurrentDateTime()}&description=${requestNote}&name=${username}`
-  });
+  })
+  .then(response => response = response.text())
+  .then(response => errorContainer.textContent = response)
 });

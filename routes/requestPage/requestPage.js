@@ -22,8 +22,15 @@ router.post('/newCall',async(req,res) => {
     const loggedUser = req.cookies?.email;
     const{category, date, description, name} = req.body;
 
-    if(category && date && description && loggedUser){    
-        await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
+    if(category && date && description && loggedUser){  
+        try{  
+            await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
+            res.send('request created succrssfully')
+        }
+        catch(err){
+            console.error(err);
+            res.send('something went wrong')
+        }
     }
 });
 

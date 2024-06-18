@@ -67,6 +67,7 @@ router.post('/changeUserDetails', async(req,res) => {
             return;
         }catch(err){
             console.error(err);
+            res.send('something went wrong, try again later');
         }
     }else{
         res.send('something went wrong, try again later');

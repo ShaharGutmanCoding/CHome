@@ -20,6 +20,7 @@ let callsErrorMessage = document.getElementById('callsErrorMessage');
 let confirmButton = document.getElementById('buttonTrue');
 let confirmButton2 = document.getElementById('buttonTrue2');
 let myModal = document.getElementById('UniqueModalId');
+let errorContainer = document.getElementById('errorContainer');
 
 let user,request,calls;
 
@@ -48,7 +49,6 @@ async function getUserDetails(){
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
     
-    console.log(request);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
@@ -287,7 +287,8 @@ save.addEventListener('click', async(event) => {
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
         body:`firstName=${firstName}&lastName=${lastName}&region=${region}&city=${city}&id=${id}&phoneNum=${phoneNum}&email=${email}`
     })
-    .then(response => console.log(response.text()))
+    .then(response => response = response.text())
+    .then(response => errorContainer.textContent = response)
 
     getUserDetails();
 })

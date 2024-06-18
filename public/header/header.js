@@ -13,14 +13,12 @@ let login = document.getElementById('login');
 let register = document.getElementById('register');
 console.log(getCookie('isLogged'));
 if (getCookie('isLogged')) {
-    login.textContent = 'my Profile';
+    login.textContent = 'הפרופיל שלי';
     login.setAttribute('href', '/profilePage');
     register.textContent = "";
-    
-    let firstName = getCookie('firstName');
 } else {
-    login.textContent = 'login';
+    login.textContent = 'התחברות';
     login.setAttribute('href', '/loginSystem/login');
-    register.textContent = 'register';
+    register.textContent = 'הרשמה';
     register.setAttribute('href', '/loginSystem/register');
 }
