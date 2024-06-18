@@ -31,18 +31,12 @@ router.get("/getCalls", async(req,res)=>{
 router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     const{helperEmail, givenID} = req.body;
 
-    const filter = { _id: givenID }; 
-    const update = {
+    let filter = { _id: givenID }; 
+    let update = {
       $push: { helpers: helperEmail}
     };
-    try{
+  
         await ticket.updateOne(filter,update);
-        return;
-    }
-    catch(err){
-        console.error(err);
-    }
-    await ticket.updateOne(filter,update);
 
     filter = { email: helperEmail }; 
     update = {
@@ -52,7 +46,7 @@ router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
 
     let helpedTicket = await ticket.findOne({_id: givenID});
     if(helpedTicket.status==="waiting for helper"){
-        helpedTicket.status="waiting for a response from the sender"
+        helpedTicket.status="waiting for response from the sender"
         helpedTicket.save()
     }
     res.end();
