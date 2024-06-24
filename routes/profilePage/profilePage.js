@@ -131,6 +131,20 @@ async function findByEmail(email){
     }
 }
 
+
+router.post('/getUser',async(req,res)=>{
+    let email = req.body?.email;
+
+    try{
+        const user = await users.findOne({email: email});
+        res.json(user);
+    }
+    catch(err){
+        console.error(err);
+        res.send('server error');
+    }
+})
+
 async function checkIfEmailExist(email, loggedUser){
     const documents = await users.findOne({email: email});
     if(documents.email == loggedUser || !documents){
@@ -141,5 +155,13 @@ async function checkIfEmailExist(email, loggedUser){
         return true;
     }
 }
+
+router.post("/updateNumOfHelps",async(req,res)=>{
+    let email = req.body.email;
+    let user = await users.findOne({email: email});
+user.numOfHelps++;
+user.save();
+
+})
 
 module.exports = router;
