@@ -1,3 +1,5 @@
+
+
 let profileTab = document.getElementById('nav-profile-tab');
 let requestTab = document.getElementById('nav-request-tab');
 let callsTab = document.getElementById('nav-calls-tab');
@@ -20,7 +22,6 @@ let callsErrorMessage = document.getElementById('callsErrorMessage');
 let confirmButton = document.getElementById('buttonTrue');
 let confirmButton2 = document.getElementById('buttonTrue2');
 let myModal = document.getElementById('UniqueModalId');
-let errorContainer = document.getElementById('errorContainer');
 
 let user,request,calls;
 
@@ -49,6 +50,7 @@ async function getUserDetails(){
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
     
+    console.log(request);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
@@ -64,7 +66,7 @@ async function getUserDetails(){
             // Create delete button
             let deleteButtonDiv = document.createElement('div');
             deleteButtonDiv.style.justifyContent = "end";
-            deleteButtonDiv.setAttribute('class','col-1');
+            deleteButtonDiv.setAttribute('class',' col-1');
             let deleteButton = document.createElement('button');
             deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>`
             deleteButton.setAttribute('class','btn btn-outline-danger');
@@ -138,7 +140,7 @@ async function getUserDetails(){
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "Show Helpers";
                 displayHelpersButton.classList.add("btn", "btn-success", "btn-sm", "mt-2");
-                displayHelpersButton.onclick = () => { displayHelpers(element.helpers); };
+                displayHelpersButton.onclick = () => { displayHelpers(element.helpers,element._id); };
                 div.appendChild(displayHelpersButton);
             }
     
@@ -153,28 +155,81 @@ async function getUserDetails(){
     }
 
 
-    // Function to display helpers in a modal
-function displayHelpers(helpers) {
-    let modalContent = document.getElementById('modalContent');
-    modalContent.innerHTML = ''; // Clear previous content
+   
+    function displayHelpers(helpers,ticketId) {
+        let modalContent = document.getElementById('modalContent');
+        modalContent.innerHTML = ''; 
+    
+        if (helpers && helpers.length > 0) {
+            helpers.forEach(async (helper) => {
+                try {
+                    let tzadik = await fetch('/profilePage/getUser', {
+                        method: 'Post',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `email=${helper}`
+                    }).then(response => response.json());
+    
+                    console.log(tzadik);
+    
+                    let helperDiv = document.createElement('div');
+                    helperDiv.classList.add('helper-entry', 'mt-2', 'p-2', 'border', 'rounded');
+    
+                    let helperName = document.createElement('span');
+                    helperName.textContent = `שם: ${tzadik.firstName + " " + tzadik.lastName}`;
+                    helperName.classList.add('helper-name', 'd-block');
+    
+                    let helperRegisterDate = document.createElement('span');
+                    helperRegisterDate.textContent = `הצטרף לצוות העוזרים בתאירך: ${tzadik.registerDate}`;
+                    helperRegisterDate.classList.add('helper-register-date', 'd-block');
+    
+                    let helperNumOfHelps = document.createElement('span');
+                    helperNumOfHelps.textContent = `מספר עזרות: ${tzadik.numOfHelps}`;
+                    helperNumOfHelps.classList.add('helper-num-of-helps', 'd-block');
+    
+                    let helperPhoneNumber = document.createElement('span');
+                    helperPhoneNumber.textContent = `טלפון נייד: ${tzadik.phoneNum}`;
+                    helperPhoneNumber.classList.add('helper-phone-number', 'd-block');
 
-    if (helpers && helpers.length > 0) {
-        helpers.forEach(helper => {
-            let helperDiv = document.createElement('div');
-            helperDiv.classList.add('helper-entry', 'mt-2', 'p-2', 'border', 'rounded');
+                    let actionButton = document.createElement('button');
+                    actionButton.textContent = 'קיבלתי ממנו את העזרה'; 
+                    actionButton.classList.add('btn', 'btn-success', 'mt-2');
+                    actionButton.onclick = async() => {
+                    await fetch("/profilePage/updateNumOfHelps",{
+                        method: 'Post',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `email=${helper}`
+                    });
 
-           
-            modalContent.appendChild(helperDiv);
-        });
-    } else {
-        let noHelpers = document.createElement('div');
-        noHelpers.textContent = 'No helpers available.';
-        modalContent.appendChild(noHelpers);
+                    await fetch("/profilePage/deleteRrequest",{
+                        method: 'Post',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `_id=${ticketId}`
+                    })
+                    };
+    
+                    helperDiv.appendChild(helperName);
+                    helperDiv.appendChild(helperRegisterDate);
+                    helperDiv.appendChild(helperNumOfHelps);
+                    helperDiv.appendChild(helperPhoneNumber);
+                    helperDiv.appendChild(actionButton);
+
+                    modalContent.appendChild(helperDiv);
+                } catch (error) {
+                    console.error('Error fetching profile details:', error);
+                }
+            });
+        } else {
+            let noHelpers = document.createElement('div');
+            noHelpers.textContent = 'No helpers available.';
+            modalContent.appendChild(noHelpers);
+        }
+    
+        let myModal = new bootstrap.Modal(document.getElementById('UniqueModalId'), {});
+        myModal.show();
     }
-
-    let myModal = new bootstrap.Modal(document.getElementById('UniqueModalId'), {});
-    myModal.show();
-}
 
 
    //הצעות עזרה
@@ -287,8 +342,7 @@ save.addEventListener('click', async(event) => {
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
         body:`firstName=${firstName}&lastName=${lastName}&region=${region}&city=${city}&id=${id}&phoneNum=${phoneNum}&email=${email}`
     })
-    .then(response => response = response.text())
-    .then(response => errorContainer.textContent = response)
+    .then(response => console.log(response.text()))
 
     getUserDetails();
 })
