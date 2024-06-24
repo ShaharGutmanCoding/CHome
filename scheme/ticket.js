@@ -31,7 +31,7 @@ const ticket = new mongoose.Schema({
     },
     status:{
         type: String,
-default: "waiting for helper",
+default: "הבקשה מחכה לאישור מאחד העוזרים באתר",
     }
 })
 
