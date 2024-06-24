@@ -59,6 +59,7 @@ async function getUserDetails(){
 }
 
 async function updateRequestTab(){
+
     requestLoading.style.display = 'block';
     requestsContainer.innerHTML = '';
     request = await fetch('/profilePage/request',{
@@ -66,84 +67,13 @@ async function updateRequestTab(){
         Credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
-
+    
     if (request.length > 0) {
-        console.log('printing requests')
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             // Create delete button
-            let deleteButtonDiv = document.createElement('div');
-            deleteButtonDiv.style.justifyContent = "end";
-            deleteButtonDiv.setAttribute('class',' col-1');
-            let deleteButton = document.createElement('button');
-            deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>`
-            deleteButton.setAttribute('class','btn btn-outline-danger');
-            deleteButton.setAttribute('id',element._id);
-            deleteButtonDiv.appendChild(deleteButton);
-            deleteButton.setAttribute('data-bs-toggle', "modal")
-            deleteButton.setAttribute('data-bs-target',"#UniqueModalId1")
-            deleteButton.onclick = function () {
-                deleteRequest(element._id)
-            }
-    
-            let div = document.createElement("div");
-            div.style.textAlign = "center";
-            div.style.justifyContent = "center";
-            div.setAttribute('class','col-11');
-    
-            // Create a span for the prescription
-            let prescription = document.createElement("span");
-            prescription.textContent = element.category;
-            prescription.style.display = "block"; 
-            prescription.style.textAlign = "center";
-            prescription.style.textDecoration = "underline"; 
-            prescription.style.fontWeight = "bold";
-            div.appendChild(prescription);
-    
-            // Create a span for the description
-            let description = document.createElement("span");
-            description.textContent = element.description;
-            description.classList.add("description");
-            description.style.textAlign = "center";
-    
-            // Check if the description is too long
-            if (description.textContent.length > 100) {
-                let shortText = description.textContent.substring(0, 100);
-                let fullText = description.textContent;
-    
-                description.textContent = shortText + "...";
-                
-                let readMoreButton = document.createElement("span");
-                readMoreButton.textContent = "המשך קריאה";
-                readMoreButton.classList.add("show-more");
-                
-                readMoreButton.onclick = function() {
-                description.textContent = fullText;
-                readMoreButton.style.display = "none";
-                };
-    
-                div.appendChild(description);
-                div.appendChild(readMoreButton);
-            } else {
-                div.appendChild(description);
-            }
-    
-            // Create a span for the date
-            let date = document.createElement("span");
-            date.textContent = element.date;
-            date.style.display = "block"; 
-            date.style.fontSize = "10px"; 
-            date.style.textAlign = "center"; 
-            div.appendChild(date);
-    
-            let status = document.createElement("span");
-            status.textContent = `Status: ${element.status}`;
-            status.style.display = "block";
-            status.style.fontSize = "16px";
-            status.style.textAlign = "center";
-            status.style.color = "green"; 
-            div.appendChild(status);
-    
+            let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest)
+            //add helpers
             if (element.status === "waiting for response from the sender") {
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "Show Helpers";
@@ -151,11 +81,9 @@ async function updateRequestTab(){
                 displayHelpersButton.onclick = () => { displayHelpers(element.helpers,element._id); };
                 div.appendChild(displayHelpersButton);
             }
-    
-            requestsContainer.appendChild(div);
-            requestsContainer.appendChild(deleteButtonDiv);
             requestLoading.style.display = 'none';
         });
+
     }else{
         console.log('request not found');
         requestLoading.style.display = 'none';
@@ -174,84 +102,10 @@ async function updateCallsTab(){
     }).then(response => response.json())
 
     if (calls.length > 0) {
-        console.log('printing calls')
+
         callsContainer.innerHTML = '';
         calls.forEach(element => {
-            // create delete button
-            let deleteButtonDiv = document.createElement('div');
-            deleteButtonDiv.style.justifyContent = "end";
-            deleteButtonDiv.setAttribute('class',' col-1');
-            let deleteButton = document.createElement('button');
-            deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>`
-            deleteButton.setAttribute('class','btn btn-outline-danger');
-            deleteButton.setAttribute('id',element._id);
-            deleteButtonDiv.appendChild(deleteButton);
-            deleteButton.setAttribute('data-bs-toggle', "modal")
-            deleteButton.setAttribute('data-bs-target',"#UniqueModalId2") 
-            deleteButton.onclick = function () {
-                deleteCall(element._id)
-            }
-    
-            let div = document.createElement("div");
-            div.style.textAlign = "center";
-            div.style.justifyContent = "center";
-            div.setAttribute('class','col-11');
-    
-            // Create a span for the prescription
-            let prescription = document.createElement("span");
-            prescription.textContent = element.category;
-            prescription.style.display = "block"; 
-            prescription.style.textAlign = "center";
-            prescription.style.textDecoration = "underline"; 
-            prescription.style.fontWeight = "bold";
-            div.appendChild(prescription);
-    
-            // Create a span for the description
-            let description = document.createElement("span");
-            description.textContent = element.description;
-            description.classList.add("description");
-            description.style.textAlign = "center";
-    
-            // Check if the description is too long
-            if (description.textContent.length > 100) {
-                let shortText = description.textContent.substring(0, 100);
-                let fullText = description.textContent;
-    
-                description.textContent = shortText + "...";
-                
-                let readMoreButton = document.createElement("span");
-                readMoreButton.textContent = "המשך קריאה";
-                readMoreButton.classList.add("show-more");
-                
-                readMoreButton.onclick = function() {
-                description.textContent = fullText;
-                readMoreButton.style.display = "none";
-                };
-    
-                div.appendChild(description);
-                div.appendChild(readMoreButton);
-            } else {
-                div.appendChild(description);
-            }
-    
-            // Create a span for the date
-            let date = document.createElement("span");
-            date.textContent = element.date;
-            date.style.display = "block"; 
-            date.style.fontSize = "10px"; 
-            date.style.textAlign = "center"; 
-            div.appendChild(date);
-    
-            let status = document.createElement("span");
-            status.textContent = `Status: ${element.status}`;
-            status.style.display = "block";
-            status.style.fontSize = "16px";
-            status.style.textAlign = "center";
-            status.style.color = "green"; 
-            div.appendChild(status);
-    
-            callsContainer.appendChild(div);
-            callsContainer.appendChild(deleteButtonDiv);
+            createTicket(element,"#UniqueModalId2",callsContainer,deleteCall);
             callsLoading.style.display = 'none';
     
         });
@@ -363,6 +217,7 @@ function displayHelpers(helpers,ticketId) {
     let myModal = new bootstrap.Modal(document.getElementById('UniqueModalId'), {});
     myModal.show();
 }
+
 async function updateUserValues(){
     user = await fetch('/profilePage/profileDetails',{
         method: 'Get',
@@ -376,4 +231,82 @@ async function updateUserValues(){
     id.value = user.id;
     city.value = user.city;
     region.value = user.region;
+}
+
+function createTicket(element,buttonId,container,callback){
+    let deleteButtonDiv = document.createElement('div');
+    deleteButtonDiv.style.justifyContent = "end";
+    deleteButtonDiv.setAttribute('class',' col-1');
+    let deleteButton = document.createElement('button');
+    deleteButton.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16"><path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z"/><path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z"/></svg>`
+    deleteButton.setAttribute('class','btn btn-outline-danger');
+    deleteButton.setAttribute('id',element._id);
+    deleteButtonDiv.appendChild(deleteButton);
+    deleteButton.setAttribute('data-bs-toggle', "modal")
+    deleteButton.setAttribute('data-bs-target',buttonId)
+    deleteButton.onclick = function () {
+        callback(element._id)
+    }
+
+    let div = document.createElement("div");
+    div.style.textAlign = "center";
+    div.style.justifyContent = "center";
+    div.setAttribute('class','col-11');
+
+    // Create a span for the prescription
+    let prescription = document.createElement("span");
+    prescription.textContent = element.category;
+    prescription.style.display = "block"; 
+    prescription.style.textAlign = "center";
+    prescription.style.textDecoration = "underline"; 
+    prescription.style.fontWeight = "bold";
+    div.appendChild(prescription);
+
+    // Create a span for the description
+    let description = document.createElement("span");
+    description.textContent = element.description;
+    description.classList.add("description");
+    description.style.textAlign = "center";
+
+    // Check if the description is too long
+    if (description.textContent.length > 100) {
+        let shortText = description.textContent.substring(0, 100);
+        let fullText = description.textContent;
+
+        description.textContent = shortText + "...";
+        
+        let readMoreButton = document.createElement("span");
+        readMoreButton.textContent = "המשך קריאה";
+        readMoreButton.classList.add("show-more");
+        
+        readMoreButton.onclick = function() {
+        description.textContent = fullText;
+        readMoreButton.style.display = "none";
+        };
+
+        div.appendChild(description);
+        div.appendChild(readMoreButton);
+    } else {
+        div.appendChild(description);
+    }
+
+    // Create a span for the date
+    let date = document.createElement("span");
+    date.textContent = element.date;
+    date.style.display = "block"; 
+    date.style.fontSize = "10px"; 
+    date.style.textAlign = "center"; 
+    div.appendChild(date);
+
+    let status = document.createElement("span");
+    status.textContent = `Status: ${element.status}`;
+    status.style.display = "block";
+    status.style.fontSize = "16px";
+    status.style.textAlign = "center";
+    status.style.color = "green"; 
+    div.appendChild(status);
+
+    container.appendChild(div);
+    container.appendChild(deleteButtonDiv);
+    return div;
 }
