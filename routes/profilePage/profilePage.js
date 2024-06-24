@@ -45,6 +45,7 @@ router.get('/request', async (req,res) => {
 router.post('/changeUserDetails', async(req,res) => {
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
+    const requests = await findTicketCreatorByEmail(loggedUser);
     const {firstName, lastName, region, city, id, phoneNum, email} = req.body;
 
     let isEmailExist = await checkIfEmailExist(email, loggedUser);
@@ -63,6 +64,12 @@ router.post('/changeUserDetails', async(req,res) => {
             user.phoneNum = phoneNum;
             user.email = email;
             await user.save();
+
+            requests.forEach(async request=>{
+                request.name = firstName;
+                await request.save();
+            });
+
             res.send('user info updated successfully')
             return;
         }catch(err){
@@ -123,6 +130,17 @@ router.post('/deleteCall', async(req,res) => {
 async function findByEmail(email){
     try{
         const documents = await users.findOne({email: email});
+        return documents;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+async function findTicketCreatorByEmail(email){
+    try{
+        const documents = (await ticket.find({createdBy: email}));
         return documents;
     }
     catch(err){
