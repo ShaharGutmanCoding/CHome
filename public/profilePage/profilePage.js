@@ -88,7 +88,7 @@ async function getUserDetails(){
             deleteButton.setAttribute('id',element._id);
             deleteButtonDiv.appendChild(deleteButton);
             deleteButton.setAttribute('data-bs-toggle', "modal")
-            deleteButton.setAttribute('data-bs-target',"#UniqueModalId")
+            deleteButton.setAttribute('data-bs-target',"#UniqueModalId1")
             deleteButton.onclick = function () {
                 deleteRequest(element._id)
             }
