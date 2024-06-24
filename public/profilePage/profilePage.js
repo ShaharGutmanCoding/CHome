@@ -71,12 +71,12 @@ async function updateRequestTab(){
     if (request.length > 0) {
         requestsContainer.innerHTML = '';
         request.forEach(element => {
-            // Create delete button
+            // Add helpers
             let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest)
-            //add helpers
-            if (element.status === "waiting for response from the sender") {
+             // Create delete button
+            if (element.status === "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
                 let displayHelpersButton = document.createElement('button');
-                displayHelpersButton.textContent = "Show Helpers";
+                displayHelpersButton.textContent = "הצג רשימת העוזרים";
                 displayHelpersButton.classList.add("btn", "btn-success", "btn-sm", "mt-2");
                 displayHelpersButton.onclick = () => { displayHelpers(element.helpers,element._id); };
                 div.appendChild(displayHelpersButton);
@@ -167,7 +167,7 @@ function displayHelpers(helpers,ticketId) {
                 helperName.classList.add('helper-name', 'd-block');
 
                 let helperRegisterDate = document.createElement('span');
-                helperRegisterDate.textContent = `הצטרף לצוות העוזרים בתאירך: ${tzadik.registerDate}`;
+                helperRegisterDate.textContent = `הצטרף לצוות העוזרים בתאריך: ${tzadik.registerDate}`;
                 helperRegisterDate.classList.add('helper-register-date', 'd-block');
 
                 let helperNumOfHelps = document.createElement('span');
@@ -299,13 +299,13 @@ function createTicket(element,buttonId,container,callback){
     div.appendChild(date);
 
     let status = document.createElement("span");
-    status.textContent = `Status: ${element.status}`;
+    status.textContent = `סטטוס: ${element.status}`;
     status.style.display = "block";
     status.style.fontSize = "16px";
     status.style.textAlign = "center";
     status.style.color = "green"; 
     div.appendChild(status);
-
+div.style.marginBottom = "20px"
     container.appendChild(div);
     container.appendChild(deleteButtonDiv);
     return div;
