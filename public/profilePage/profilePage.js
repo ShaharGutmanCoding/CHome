@@ -25,7 +25,23 @@ let myModal = document.getElementById('UniqueModalId');
 
 let user,request,calls;
 
+//Call user details on page load
 getUserDetails();
+
+
+save.addEventListener('click', async(event) => {
+    event.preventDefault();
+    await fetch('/profilePage/changeUserDetails', {
+        method:'Post',
+        Credential:'include',
+        headers:{'Content-Type': 'application/x-www-form-urlencoded'},
+        body:`firstName=${firstName.value}&lastName=${lastName.value}&region=${region.value}&city=${city.value}&id=${id.value}&phoneNum=${phoneNum.value}&email=${email.value}`
+    })
+    .then(response => console.log(response.text()))
+    getUserDetails();
+})
+
+
 async function getUserDetails(){
     requestLoading.style.display = 'block';
     callsLoading.style.display = 'block';
@@ -50,7 +66,6 @@ async function getUserDetails(){
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
     
-    console.log(request);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
@@ -154,84 +169,6 @@ async function getUserDetails(){
         requestErrorMessage.style.display = 'block';
     }
 
-
-   
-    function displayHelpers(helpers,ticketId) {
-        let modalContent = document.getElementById('modalContent');
-        modalContent.innerHTML = ''; 
-    
-        if (helpers && helpers.length > 0) {
-            helpers.forEach(async (helper) => {
-                try {
-                    let tzadik = await fetch('/profilePage/getUser', {
-                        method: 'Post',
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: `email=${helper}`
-                    }).then(response => response.json());
-    
-                    console.log(tzadik);
-    
-                    let helperDiv = document.createElement('div');
-                    helperDiv.classList.add('helper-entry', 'mt-2', 'p-2', 'border', 'rounded');
-    
-                    let helperName = document.createElement('span');
-                    helperName.textContent = `שם: ${tzadik.firstName + " " + tzadik.lastName}`;
-                    helperName.classList.add('helper-name', 'd-block');
-    
-                    let helperRegisterDate = document.createElement('span');
-                    helperRegisterDate.textContent = `הצטרף לצוות העוזרים בתאירך: ${tzadik.registerDate}`;
-                    helperRegisterDate.classList.add('helper-register-date', 'd-block');
-    
-                    let helperNumOfHelps = document.createElement('span');
-                    helperNumOfHelps.textContent = `מספר עזרות: ${tzadik.numOfHelps}`;
-                    helperNumOfHelps.classList.add('helper-num-of-helps', 'd-block');
-    
-                    let helperPhoneNumber = document.createElement('span');
-                    helperPhoneNumber.textContent = `טלפון נייד: ${tzadik.phoneNum}`;
-                    helperPhoneNumber.classList.add('helper-phone-number', 'd-block');
-
-                    let actionButton = document.createElement('button');
-                    actionButton.textContent = 'קיבלתי ממנו את העזרה'; 
-                    actionButton.classList.add('btn', 'btn-success', 'mt-2');
-                    actionButton.onclick = async() => {
-                    await fetch("/profilePage/updateNumOfHelps",{
-                        method: 'Post',
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: `email=${helper}`
-                    });
-
-                    await fetch("/profilePage/deleteRrequest",{
-                        method: 'Post',
-                        credentials: 'include',
-                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                        body: `_id=${ticketId}`
-                    })
-                    };
-    
-                    helperDiv.appendChild(helperName);
-                    helperDiv.appendChild(helperRegisterDate);
-                    helperDiv.appendChild(helperNumOfHelps);
-                    helperDiv.appendChild(helperPhoneNumber);
-                    helperDiv.appendChild(actionButton);
-
-                    modalContent.appendChild(helperDiv);
-                } catch (error) {
-                    console.error('Error fetching profile details:', error);
-                }
-            });
-        } else {
-            let noHelpers = document.createElement('div');
-            noHelpers.textContent = 'No helpers available.';
-            modalContent.appendChild(noHelpers);
-        }
-    
-        let myModal = new bootstrap.Modal(document.getElementById('UniqueModalId'), {});
-        myModal.show();
-    }
-
-
    //הצעות עזרה
 
    if (calls.length > 0) {
@@ -316,36 +253,14 @@ async function getUserDetails(){
         callsLoading.style.display = 'none';
 
     });
-}else{
-    console.log('calls not found');
-    callsLoading.style.display = 'none';
-    callsErrorMessage.style.display = 'block';
-}
+    }else{
+        console.log('calls not found');
+        callsLoading.style.display = 'none';
+        callsErrorMessage.style.display = 'block';
+    }
 
 }
 
-save.addEventListener('click', async(event) => {
-    let firstName = document.getElementById('firstName').value;
-    let lastName = document.getElementById('lastName').value;
-    let id = document.getElementById('id').value;
-    let region = document.getElementById('region').value;
-    let city = document.getElementById('city').value;
-    let phoneNum = document.getElementById('phoneNum').value;
-    let email = document.getElementById('email').value;
-
-    console.log(firstName, lastName, id, region, city, phoneNum, email);
-    event.preventDefault();
-    
-    let changeUserDetails = await fetch('/profilePage/changeUserDetails', {
-        method:'Post',
-        Credential:'include',
-        headers:{'Content-Type': 'application/x-www-form-urlencoded'},
-        body:`firstName=${firstName}&lastName=${lastName}&region=${region}&city=${city}&id=${id}&phoneNum=${phoneNum}&email=${email}`
-    })
-    .then(response => console.log(response.text()))
-
-    getUserDetails();
-})
 
 async function deleteRequest(givenId){
     confirmButton.addEventListener('click', async()=>{
@@ -373,7 +288,77 @@ async function deleteCall(givenId){
     });
 }
 
+function displayHelpers(helpers,ticketId) {
+    let modalContent = document.getElementById('modalContent');
+    modalContent.innerHTML = ''; 
 
+    if (helpers && helpers.length > 0) {
+        helpers.forEach(async (helper) => {
+            try {
+                let tzadik = await fetch('/profilePage/getUser', {
+                    method: 'Post',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `email=${helper}`
+                }).then(response => response.json());
 
+                console.log(tzadik);
 
-//קריאות
+                let helperDiv = document.createElement('div');
+                helperDiv.classList.add('helper-entry', 'mt-2', 'p-2', 'border', 'rounded');
+
+                let helperName = document.createElement('span');
+                helperName.textContent = `שם: ${tzadik.firstName + " " + tzadik.lastName}`;
+                helperName.classList.add('helper-name', 'd-block');
+
+                let helperRegisterDate = document.createElement('span');
+                helperRegisterDate.textContent = `הצטרף לצוות העוזרים בתאירך: ${tzadik.registerDate}`;
+                helperRegisterDate.classList.add('helper-register-date', 'd-block');
+
+                let helperNumOfHelps = document.createElement('span');
+                helperNumOfHelps.textContent = `מספר עזרות: ${tzadik.numOfHelps}`;
+                helperNumOfHelps.classList.add('helper-num-of-helps', 'd-block');
+
+                let helperPhoneNumber = document.createElement('span');
+                helperPhoneNumber.textContent = `טלפון נייד: ${tzadik.phoneNum}`;
+                helperPhoneNumber.classList.add('helper-phone-number', 'd-block');
+
+                let actionButton = document.createElement('button');
+                actionButton.textContent = 'קיבלתי ממנו את העזרה'; 
+                actionButton.classList.add('btn', 'btn-success', 'mt-2');
+                actionButton.onclick = async() => {
+                await fetch("/profilePage/updateNumOfHelps",{
+                    method: 'Post',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `email=${helper}`
+                });
+
+                await fetch("/profilePage/deleteRrequest",{
+                    method: 'Post',
+                    credentials: 'include',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: `_id=${ticketId}`
+                })
+                };
+
+                helperDiv.appendChild(helperName);
+                helperDiv.appendChild(helperRegisterDate);
+                helperDiv.appendChild(helperNumOfHelps);
+                helperDiv.appendChild(helperPhoneNumber);
+                helperDiv.appendChild(actionButton);
+
+                modalContent.appendChild(helperDiv);
+            } catch (error) {
+                console.error('Error fetching profile details:', error);
+            }
+        });
+    } else {
+        let noHelpers = document.createElement('div');
+        noHelpers.textContent = 'No helpers available.';
+        modalContent.appendChild(noHelpers);
+    }
+
+    let myModal = new bootstrap.Modal(document.getElementById('UniqueModalId'), {});
+    myModal.show();
+}
