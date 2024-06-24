@@ -72,7 +72,7 @@ async function updateRequestTab(){
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             // Add helpers
-            let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest)
+            let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest,"request")
              // Create delete button
             if (element.status === "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
                 let displayHelpersButton = document.createElement('button');
@@ -105,7 +105,7 @@ async function updateCallsTab(){
 
         callsContainer.innerHTML = '';
         calls.forEach(element => {
-            createTicket(element,"#UniqueModalId2",callsContainer,deleteCall);
+            createTicket(element,"#UniqueModalId2",callsContainer,deleteCall,"call");
             callsLoading.style.display = 'none';
     
         });
@@ -233,7 +233,7 @@ async function updateUserValues(){
     region.value = user.region;
 }
 
-function createTicket(element,buttonId,container,callback){
+function createTicket(element,buttonId,container,callback,indication){
     let deleteButtonDiv = document.createElement('div');
     deleteButtonDiv.style.justifyContent = "end";
     deleteButtonDiv.setAttribute('class',' col-1');
@@ -255,7 +255,10 @@ function createTicket(element,buttonId,container,callback){
 
     // Create a span for the prescription
     let prescription = document.createElement("span");
+    if(indication==="request")
     prescription.textContent = element.category;
+    else
+    prescription.textContent = element.name + "  :" + element.category
     prescription.style.display = "block"; 
     prescription.style.textAlign = "center";
     prescription.style.textDecoration = "underline"; 
@@ -299,13 +302,16 @@ function createTicket(element,buttonId,container,callback){
     div.appendChild(date);
 
     let status = document.createElement("span");
+    if(indication==="request")
     status.textContent = `סטטוס: ${element.status}`;
+    else
+    status.textContent = `סטטוס: שולח הבקשה ייצור איתך קשר בהקדם`;
     status.style.display = "block";
     status.style.fontSize = "16px";
     status.style.textAlign = "center";
     status.style.color = "green"; 
     div.appendChild(status);
-div.style.marginBottom = "20px"
+    div.style.marginBottom = "20px"
     container.appendChild(div);
     container.appendChild(deleteButtonDiv);
     return div;
