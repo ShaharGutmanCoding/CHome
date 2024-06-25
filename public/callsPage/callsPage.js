@@ -21,11 +21,11 @@ for (let i = 0; i < categorysObject.length; i++) {
 let counter = document.getElementById("counter");
 let requestsContainer = document.getElementById("requestsContainer");
 
-function requestAnswerd(answerRequestBtn){
+function unableButton(answerRequestBtn,message){
   answerRequestBtn.style.backgroundColor = "gray";
   answerRequestBtn.style.borderColor = "gray";
   answerRequestBtn.style.cursor = "default"
-  answerRequestBtn.textContent = "Request was granted"
+  answerRequestBtn.textContent = message;
   answerRequestBtn.onclick = function () {};
 }
 
@@ -98,9 +98,11 @@ function createCall(object) {
   answerRequestBtn.onclick = function () {
     acceptHelp(object._id);
   };
+  if(object.createdBy===fixEmailAdress(getCookie("email")))
+    unableButton(answerRequestBtn,"הבקשה היא שלך");
   object.helpers.forEach(helper=>{
     if(helper === fixEmailAdress(getCookie("email"))){
-      requestAnswerd(answerRequestBtn);
+      unableButton(answerRequestBtn,"ענית על בקשה זו");
     }
 
 });
@@ -122,6 +124,7 @@ fetch('/callsPage/getCalls')
   .then(response => response.json())
   .then(data => {
     counter.innerHTML = "There are " + data.length + " requests";
+    data = data.reverse();
     for (let i = 0; i < data.length; i++) {
       createCall(data[i]);
     }
@@ -130,7 +133,7 @@ fetch('/callsPage/getCalls')
 async function acceptHelp(givenID) {
 
   let btn = document.getElementById(givenID);
-requestAnswerd(btn);
+unableButton(btn,"ענית על בקשה זו");
 
   var helperEmail = fixEmailAdress(getCookie("email"));
   await fetch("/callsPage/addHelperAndHelpingSuggestion", {

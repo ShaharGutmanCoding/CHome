@@ -14,7 +14,7 @@ router.post('/createUser', async(req,res) => {
 
     if (firstName && lastName && password && region && city && id && phoneNum && email ) {
         try{
-            let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email});
+            let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email, registerDate:getCurrentDate()});
             res.send(response);
             return;
         }
@@ -23,5 +23,12 @@ router.post('/createUser', async(req,res) => {
         }
     }
 })
+
+function getCurrentDate() {
+    let now = new Date();
+    let date = now.toLocaleDateString();
+    console.log(date);
+    return `${date}`;
+  }
 
 module.exports = router;

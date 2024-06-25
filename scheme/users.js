@@ -45,7 +45,13 @@ const users = new mongoose.Schema({
         type:String,
         default:0,
     },
-   
+   registerDate:{
+    type:String,
+   },
+   numOfHelps:{
+    type:Number,
+default:0,
+   }
 })
 
 module.exports = mongoose.model('usersChome',users);

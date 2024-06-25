@@ -45,8 +45,8 @@ router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
     await users.updateOne(filter,update);
 
     let helpedTicket = await ticket.findOne({_id: givenID});
-    if(helpedTicket.status==="waiting for helper"){
-        helpedTicket.status="waiting for response from the sender"
+    if(helpedTicket.status==="הבקשה מחכה לאישור מאחד העוזרים באתר"){
+        helpedTicket.status=' הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר'
         helpedTicket.save()
     }
     res.end();

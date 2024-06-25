@@ -45,6 +45,7 @@ router.get('/request', async (req,res) => {
 router.post('/changeUserDetails', async(req,res) => {
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
+    const requests = await findTicketCreatorByEmail(loggedUser);
     const {firstName, lastName, region, city, id, phoneNum, email} = req.body;
 
     let isEmailExist = await checkIfEmailExist(email, loggedUser);
@@ -63,6 +64,12 @@ router.post('/changeUserDetails', async(req,res) => {
             user.phoneNum = phoneNum;
             user.email = email;
             await user.save();
+
+            requests.forEach(async request=>{
+                request.name = firstName;
+                await request.save();
+            });
+
             res.send('user info updated successfully')
             return;
         }catch(err){
@@ -131,6 +138,31 @@ async function findByEmail(email){
     }
 }
 
+async function findTicketCreatorByEmail(email){
+    try{
+        const documents = (await ticket.find({createdBy: email}));
+        return documents;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
+
+
+router.post('/getUser',async(req,res)=>{
+    let email = req.body?.email;
+
+    try{
+        const user = await users.findOne({email: email});
+        res.json(user);
+    }
+    catch(err){
+        console.error(err);
+        res.send('server error');
+    }
+})
+
 async function checkIfEmailExist(email, loggedUser){
     const documents = await users.findOne({email: email});
     if(documents.email == loggedUser || !documents){
@@ -141,5 +173,13 @@ async function checkIfEmailExist(email, loggedUser){
         return true;
     }
 }
+
+router.post("/updateNumOfHelps",async(req,res)=>{
+    let email = req.body.email;
+    let user = await users.findOne({email: email});
+user.numOfHelps++;
+user.save();
+
+})
 
 module.exports = router;
