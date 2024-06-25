@@ -2,7 +2,6 @@ var categorySelect = document.getElementById("select_page");
 const form = document.getElementById('formSelect');
 const errorContainer = document.getElementById('errorContainer');
 
-
 function fixEmailAdress(value) {
   return value.replace("%40", "@");
 }
@@ -49,23 +48,45 @@ for (let i = 0; i < categorysObject.length; i++) {
   categorySelect.appendChild(option);
 }
 
-form.addEventListener('submit', async (event) => {
-  let category = document.getElementById('select_page').value;
-  let requestNote = document.getElementById('reqNotes').value;
-  event.preventDefault();
+// Restore values from local storage if available
+document.addEventListener('DOMContentLoaded', (event) => {
+  const savedCategory = localStorage.getItem('selectedCategory');
+  const savedRequestNote = localStorage.getItem('requestNote');
+  if (savedCategory) {
+    categorySelect.value = savedCategory;
+  }
+  if (savedRequestNote) {
+    document.getElementById('reqNotes').value = savedRequestNote;
+  }
+});
 
+form.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  
+  let category = categorySelect.value;
+  let requestNote = document.getElementById('reqNotes').value;
+
+  // Save values to local storage
+  localStorage.setItem('selectedCategory', category);
+  localStorage.setItem('requestNote', requestNote);
 
   let username = await getUsernameByEmail();  
   console.log(username);
-  document.getElementById('modalBody').innerHTML = category;
+  document.getElementById('categoryValue').innerHTML = category;
+  document.getElementById('ModalNotes').innerHTML = requestNote;
+
   const myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
   myModal.show();
+  
   await fetch('/requestPage/newCall', {
     method: 'POST',
     credentials: 'include',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: `category=${category}&date=${getCurrentDateTime()}&description=${requestNote}&name=${username}`
   })
-  .then(response => response = response.text())
+  .then(response => response.text())
   .then(response => errorContainer.textContent = response)
+  document.getElementById('reqNotes').value = "";
+  categorySelect.value = "default"
+
 });
