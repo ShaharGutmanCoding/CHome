@@ -50,17 +50,16 @@ for (let i = 0; i < categorysObject.length; i++) {
 }
 
 form.addEventListener('submit', async (event) => {
-  event.preventDefault();
   let category = document.getElementById('select_page').value;
   let requestNote = document.getElementById('reqNotes').value;
+  event.preventDefault();
+
 
   let username = await getUsernameByEmail();  
   console.log(username);
-  document.getElementById('modalBody').innerHTML = `rgssregregrt`;
-
+  document.getElementById('modalBody').innerHTML = category;
   const myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
-    myModal.show();
-
+  myModal.show();
   await fetch('/requestPage/newCall', {
     method: 'POST',
     credentials: 'include',

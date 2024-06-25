@@ -15,68 +15,48 @@
       </script>
   </head>
   <body>
-  <div id="header"></div>
-  <div class="container ">
-    <h1 class="main-title" class="text-center">בקשת עזרה</h1>
-    <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
-        <p class="paragraph">
-            השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
-        </p>
-    </div>
-    <form id="formSelect">
-      <div class="border p-4 rounded-3 ">
-      <div class="row justify-content-center mb-3">
-          <select id="select_page"  class="operator w-50 form-select text-center"> 
-              <option disabled selected aria-required="true"> קטגוריות</option> 
-          </select>
-      </div>
+    <div id="header"></div>
 
-      
-        <div class="mb-3">
+    <div class="container">
+      <h1 class="main-title" class="text-center">בקשת עזרה</h1>
+      <div class="border p-3 rounded-3 mb-2 text-end text-sm-center lh-sm">
+          <p class="paragraph">
+              השימוש בכפתור שליחת בקשה ישלח בקשה למתנדבים הקרובים אליכם אשר מתאימים לבקשתכם ובמידה וימצא התאמה של מתנדב ישלח אליכם הודעה להודעות עם פרטים של המתנדב וזמן הגעה לפי בקשתכם <br> שימו לב, אם בקשתכם לשעה עתידית יש לסמן בכפתור "בקשה עתידית" אך אם תרצו בקשת עזרה לעכשיו יש לסמן בכפתור "בקשה מיידית"
+          </p>
+      </div>
+      <form id="formSelect" class="border p-4 rounded-3">
+          <div class="row justify-content-center mb-3" aria-required="true">
+              <select id="select_page"  class="operator w-50 form-select text-center"> 
+                  <option disabled selected aria-required="true"> קטגוריות</option> 
+              </select>
+          </div>  
           <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text" required></textarea>
-        </div>
-        <div class="row justify-content-center mb-3">
-          <div class="col-auto">
-            <!-- Button from Bootstrap -->
-            <!-- <button type="submit" class="btn btn-primary" id="submit">שליחת בקשה</button> -->
+          <input type="submit" class="btn btn-primary btn-bd-primary" id="submit" data-toggle="modal" data-target="#myModal">
+        </form>
+      <div class="row container text-container" id="errorContainer"></div>
+    </div>
+    <div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title justify-content-end  ">הבקשה נשלחה</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
-        </div>
-      </div>
-
-      <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal"> שליחה</button>
-
-  </form>
-  <div class="row container text-container" id="errorContainer"></div>
-  </div>
-  <div class="modal" id="myModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title justify-content-end  ">הבקשה נשלחה</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-          
-        </div>
-        <div id="modalBody" class="modal-body">
-          <div class="text-end">
-            <p id="modalCategory">
-              :קטגוריה
-              <div id="categoryValue"></div>
-            </p>
-            
-            <p id="modalNoteReq">:הערות לבקשה</p>
+          <div id="modalBody" class="modal-body">
+            <div class="text-end">
+              <p id="modalCategory">
+                :קטגוריה
+                <div id="categoryValue"></div>
+              </p>
+              
+              <p id="modalNoteReq">:הערות לבקשה</p>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
         </div>
       </div>
     </div>
-  </div>
   </body>
 
-  
-  
-
-
-<script src="./request/request.js"></script>
+  <script src="/request/request.js"></script>
 
 </html>
