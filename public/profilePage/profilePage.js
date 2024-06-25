@@ -185,13 +185,18 @@ function displayHelpers(helpers,ticketId) {
                 actionButton.textContent = 'קיבלתי ממנו את העזרה'; 
                 actionButton.classList.add('btn', 'btn-success', 'mt-2');
                 actionButton.onclick = async() => {
+modalContent.innerHTML = "תודה שנעזרת בצוות העוזרים הנהדר שלנו! שיהיה לך יום מקסים";
+requestsContainer.innerHTML = "";
 
-                    await fetch("/profilePage/deleteRrequest",{
+
+                    await fetch("/profilePage/deleteRequest",{
                         method: 'Post',
                         credentials: 'include',
                         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                         body: `_id=${ticketId}`
                     });
+
+                    await getUserDetails();
 
                 await fetch("/profilePage/updateNumOfHelps",{
                     method: 'Post',
@@ -199,6 +204,7 @@ function displayHelpers(helpers,ticketId) {
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: `email=${helper}`
                 });
+
 
               
                 };

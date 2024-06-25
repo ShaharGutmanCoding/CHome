@@ -93,13 +93,13 @@ function createCall(object) {
 
   let answerRequestBtn = document.createElement("button");
   answerRequestBtn.id = object._id;
-  answerRequestBtn.textContent = "Answer Request";
+  answerRequestBtn.textContent = "אני רוצה לעזור";
   answerRequestBtn.classList.add("btn", "btn-primary", "btn-sm");
   answerRequestBtn.onclick = function () {
     acceptHelp(object._id);
   };
-  if(object.createdBy===fixEmailAdress(getCookie("email")))
-    unableButton(answerRequestBtn,"הבקשה היא שלך");
+  // if(object.createdBy===fixEmailAdress(getCookie("email")))
+  //   unableButton(answerRequestBtn,"הבקשה היא שלך");
   object.helpers.forEach(helper=>{
     if(helper === fixEmailAdress(getCookie("email"))){
       unableButton(answerRequestBtn,"ענית על בקשה זו");
