@@ -133,7 +133,7 @@ fetch('/callsPage/getCalls')
 async function acceptHelp(givenID) {
 
   let btn = document.getElementById(givenID);
-requestAnswerd(btn);
+unableButton(btn,"ענית על בקשה זו");
 
   var helperEmail = fixEmailAdress(getCookie("email"));
   await fetch("/callsPage/addHelperAndHelpingSuggestion", {

@@ -67,20 +67,23 @@ async function updateRequestTab(){
         Credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
+    console.log(request);
     
     if (request.length > 0) {
         requestsContainer.innerHTML = '';
         request.forEach(element => {
-            // Add helpers
             let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest,"request")
-             // Create delete button
-            if (element.status === "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
+            if (element.status === " הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
+                console.log("in")
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "הצג רשימת העוזרים";
                 displayHelpersButton.classList.add("btn", "btn-success", "btn-sm", "mt-2");
                 displayHelpersButton.onclick = () => { displayHelpers(element.helpers,element._id); };
                 div.appendChild(displayHelpersButton);
             }
+            else
+            console.log("out");
+
             requestLoading.style.display = 'none';
         });
 
@@ -182,6 +185,14 @@ function displayHelpers(helpers,ticketId) {
                 actionButton.textContent = 'קיבלתי ממנו את העזרה'; 
                 actionButton.classList.add('btn', 'btn-success', 'mt-2');
                 actionButton.onclick = async() => {
+
+                    await fetch("/profilePage/deleteRrequest",{
+                        method: 'Post',
+                        credentials: 'include',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `_id=${ticketId}`
+                    });
+
                 await fetch("/profilePage/updateNumOfHelps",{
                     method: 'Post',
                     credentials: 'include',
@@ -189,12 +200,7 @@ function displayHelpers(helpers,ticketId) {
                     body: `email=${helper}`
                 });
 
-                await fetch("/profilePage/deleteRrequest",{
-                    method: 'Post',
-                    credentials: 'include',
-                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: `_id=${ticketId}`
-                })
+              
                 };
 
                 helperDiv.appendChild(helperName);
