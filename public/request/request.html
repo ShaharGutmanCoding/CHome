@@ -27,13 +27,13 @@
       <div class="border p-4 rounded-3 ">
       <div class="row justify-content-center mb-3">
           <select id="select_page"  class="operator w-50 form-select text-center"> 
-              <option disabled selected> קטגוריות</option> 
+              <option disabled selected aria-required="true"> קטגוריות</option> 
           </select>
       </div>
 
       
         <div class="mb-3">
-          <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text"></textarea>
+          <textarea id="reqNotes" class="form-control paragraph" rows="2" placeholder="הערות לבקשה/מתנדב" type="text" required></textarea>
         </div>
         <div class="row justify-content-center mb-3">
           <div class="col-auto">
@@ -42,7 +42,9 @@
           </div>
         </div>
       </div>
-      <input type="submit" class="btn btn-primary" id="submit">
+
+      <button class="btn btn-primary" type="button" data-bs-toggle="modal" data-bs-target="#myModal"> שליחה</button>
+
   </form>
   <div class="row container text-container" id="errorContainer"></div>
   </div>
@@ -52,16 +54,19 @@
         <div class="modal-header">
           <h5 class="modal-title justify-content-end  ">הבקשה נשלחה</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          
         </div>
-        <div id="modalBody" class="modal-body ">
+        <div id="modalBody" class="modal-body">
           <div class="text-end">
-            <p id="modalCategory">:קטגוריה</p>
-            <p id="modalDate">:תאריך בקשה</p>
+            <p id="modalCategory">
+              :קטגוריה
+              <div id="categoryValue"></div>
+            </p>
+            
             <p id="modalNoteReq">:הערות לבקשה</p>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         </div>
       </div>
     </div>

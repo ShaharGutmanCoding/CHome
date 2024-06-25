@@ -56,6 +56,10 @@ form.addEventListener('submit', async (event) => {
 
   let username = await getUsernameByEmail();  
   console.log(username);
+  document.getElementById('modalBody').innerHTML = `rgssregregrt`;
+
+  const myModal = new bootstrap.Modal(document.getElementById('myModal'), {})
+    myModal.show();
 
   await fetch('/requestPage/newCall', {
     method: 'POST',
