@@ -73,7 +73,7 @@ async function updateRequestTab(){
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest,"request")
-            if (element.status === "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
+            if (element.status !== "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
                 console.log("in")
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "הצג רשימת העוזרים";
