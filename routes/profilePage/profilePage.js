@@ -5,6 +5,7 @@ const path = require('path');
 const ticket = require('../../scheme/ticket');
 const users = require('../../scheme/users');
 const cookieParser = require('cookie-parser');
+
 // const cookieParser = require('cookie-parser');
 
 router.use('/',(req,res,next) => {
@@ -23,7 +24,6 @@ router.get('/',(req,res) => {
 router.get('/profileDetails', async (req,res) =>{
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
-
     res.json(user);
 })
 
@@ -69,7 +69,7 @@ router.post('/changeUserDetails', async(req,res) => {
                 request.name = firstName;
                 await request.save();
             });
-
+            res.cookie('email', email, { maxAge: 900000, httpOnly: true });
             res.send('user info updated successfully')
             return;
         }catch(err){

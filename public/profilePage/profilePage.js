@@ -73,7 +73,7 @@ async function updateRequestTab(){
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest,"request")
-            if (element.status === "הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר") {
+            if (element.helpers>0) {
                 console.log("in")
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "הצג רשימת העוזרים";
@@ -236,6 +236,7 @@ async function updateUserValues(){
         Credentials:'include',
         headers:{'Content-Type': 'application/x-www-form-urlencoded'},
     }).then(response => response.json())
+    console.log(user);
     firstName.value = user.firstName;
     lastName.value = user.lastName;
     email.value = user.email;
