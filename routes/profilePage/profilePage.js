@@ -47,7 +47,7 @@ router.post('/changeUserDetails', async(req,res) => {
     const user = await findByEmail(loggedUser);
     const requests = await findTicketCreatorByEmail(loggedUser);
     const {firstName, lastName, region, city, id, phoneNum} = req.body;
-    let email = req.body.email;
+    const email = req.body?.email;
     let isEmailExist = await checkIfEmailExist(email, loggedUser);
 
     if(isEmailExist){
@@ -67,9 +67,11 @@ router.post('/changeUserDetails', async(req,res) => {
 
             requests.forEach(async request=>{
                 request.name = firstName;
+                request.createdBy = email;
                 await request.save();
             });
-            res.cookie('email', email, { maxAge: 900000, httpOnly: true });
+            res.cookie('email', email, {maxAge: 1000 * 60 * 60 * 24});
+            res.cookie('firstName', firstName, {maxAge: 1000 * 60 * 60 * 24});
             res.send('user info updated successfully')
             return;
         }catch(err){

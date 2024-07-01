@@ -73,7 +73,7 @@ async function updateRequestTab(){
         requestsContainer.innerHTML = '';
         request.forEach(element => {
             let div = createTicket(element,"#UniqueModalId1",requestsContainer,deleteRequest,"request")
-            if (element.helpers>0) {
+            if (element.helpers.length>0) {
                 console.log("in")
                 let displayHelpersButton = document.createElement('button');
                 displayHelpersButton.textContent = "הצג רשימת העוזרים";
