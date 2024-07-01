@@ -1,6 +1,18 @@
 let form = document.getElementById('loginForm');
 let failTry = document.getElementById('failMessage');
 
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.trim().split('=');
+      if (cookieName === name) {
+        return cookieValue;
+      }
+    }
+    return null; 
+  }
+  
+
 form.addEventListener('submit', async(event) => {
     let email = document.getElementById('email').value;
     let password = document.getElementById('password').value;
@@ -13,9 +25,11 @@ form.addEventListener('submit', async(event) => {
     })
     .then(response=>response.json())
     .then(data=>{
-        if(data.flag)
+        if(data.flag){
             window.location.href = data.router;
-        else
-        failTry.textContent = data.error;
+        }
+        else{
+          failTry.textContent = data.error;
+        }
     })
 })

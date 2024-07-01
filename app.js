@@ -1,4 +1,4 @@
-//===========requires=============
+//=========== requires =============
 const express = require('express');
 const mongoose = require('mongoose');
 const router = require('./routes/index')
@@ -12,6 +12,7 @@ const PORT = 3000;
 app.use(express.static('public'));
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
+app.use(cookieParser());
 app.use('/',router);
 
 mongoose.connect(process.env.MONGODB_CONNECTION_STRING)

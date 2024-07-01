@@ -33,7 +33,6 @@ const users = new mongoose.Schema({
 
     email:{
         type:String,
-        default:'',
         unique: true,
     },
 
@@ -43,9 +42,16 @@ const users = new mongoose.Schema({
     },
 
     phoneNum:{
-        type:Number,
+        type:String,
         default:0,
     },
+   registerDate:{
+    type:String,
+   },
+   numOfHelps:{
+    type:Number,
+default:0,
+   }
 })
 
 module.exports = mongoose.model('usersChome',users);

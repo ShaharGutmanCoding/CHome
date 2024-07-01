@@ -3,14 +3,15 @@ const express = require('express');
 const router = Router();
 const path = require('path');
 const ticket = require('../../scheme/ticket');
+const users = require('../../scheme/users');
 
-// router.use((req,res,next) => {
-//     if(req.cookies?.isLogged){
-//         next();
-//     }else{
-//         res.redirect('#')
-//     }
-// });
+router.use((req,res,next) => {
+    if(req.cookies?.isLogged){
+        next();
+    }else{
+        res.redirect('/error')
+    }
+});
 
 router.get('/',(req,res) => {
     const file = path.join(__dirname + '../../../public/request/request.html');
@@ -18,16 +19,32 @@ router.get('/',(req,res) => {
 });
 
 router.post('/newCall',async(req,res) => {
-    let category = req.body?.category;
-    let date = req.body?.date;
-    let description = req.body?.description;
+    const loggedUser = req.cookies?.email;
+    const{category, date, description, name} = req.body;
 
-    if(category && date && description){    
-        await ticket.create({category: category, date: date, description: description,})
-        res.statusCode(200).send('ticket created succsessfully');
-    }else{
-        res.statusCode(503).send('cant create ticket');
+    if(category && date && description && loggedUser){  
+        try{  
+            await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
+            res.send('request created succrssfully')
+        }
+        catch(err){
+            console.error(err);
+            res.send('something went wrong')
+        }
     }
 });
+
+router.post('/getUserName',async(req,res)=>{
+    let email = req.body?.email;
+
+    try{
+        const user = await users.findOne({email: email});
+        res.json(user);
+    }
+    catch(err){
+        console.error(err);
+        res.send('server error');
+    }
+})
 
 module.exports = router;
