@@ -5,6 +5,7 @@ const path = require('path');
 const ticket = require('../../scheme/ticket');
 const users = require('../../scheme/users');
 const cookieParser = require('cookie-parser');
+
 // const cookieParser = require('cookie-parser');
 
 router.use('/',(req,res,next) => {
@@ -23,7 +24,6 @@ router.get('/',(req,res) => {
 router.get('/profileDetails', async (req,res) =>{
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
-
     res.json(user);
 })
 
@@ -46,8 +46,8 @@ router.post('/changeUserDetails', async(req,res) => {
     const loggedUser = req.cookies?.email;
     const user = await findByEmail(loggedUser);
     const requests = await findTicketCreatorByEmail(loggedUser);
-    const {firstName, lastName, region, city, id, phoneNum, email} = req.body;
-
+    const {firstName, lastName, region, city, id, phoneNum} = req.body;
+    let email = req.body.email;
     let isEmailExist = await checkIfEmailExist(email, loggedUser);
 
     if(isEmailExist){
@@ -69,7 +69,7 @@ router.post('/changeUserDetails', async(req,res) => {
                 request.name = firstName;
                 await request.save();
             });
-
+            res.cookie('email', email, { maxAge: 900000, httpOnly: true });
             res.send('user info updated successfully')
             return;
         }catch(err){
@@ -163,16 +163,23 @@ router.post('/getUser',async(req,res)=>{
     }
 })
 
-async function checkIfEmailExist(email, loggedUser){
-    const documents = await users.findOne({email: email});
-    if(documents.email == loggedUser || !documents){
-        // email doesnt exist
+async function checkIfEmailExist(email, loggedUser) {
+    try {
+        const documents = await users.findOne({ email: email });
+        // Check if documents is null before accessing properties
+        if (!documents || documents.email === loggedUser) {
+            // Email doesn't exist or is the logged user's email
+            return false;
+        } else {
+            // Email exists and is not the logged user's email
+            return true;
+        }
+    } catch (err) {
+        console.error('Error checking if email exists:', err);
         return false;
-    }else{
-        //email exist
-        return true;
     }
 }
+
 
 router.post("/updateNumOfHelps",async(req,res)=>{
     let email = req.body.email;
