@@ -22,9 +22,13 @@ form.addEventListener('submit', async(event) => {
             body:`firstName=${firstName}&lastName=${lastName}&password=${password}&region=${region}&city=${city}&id=${id}&phoneNum=${phoneNum}&email=${email}`
         })
         .then(response => response.json())
-        .then(()=> window.location.href = '/loginSystem/login')
-    }else{
-        failTry.textContent = "password confirm is not same to chosen password"
+        .then((response) => {
+            if (response === 'user created successfully') {
+                window.location.href = '/loginSystem/login'
+            } else {
+                failTry.textContent = response;
+            }
+        })
     }
 });
 

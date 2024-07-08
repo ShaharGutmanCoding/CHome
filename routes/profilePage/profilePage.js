@@ -31,15 +31,12 @@ router.get('/request', async (req,res) => {
     const loggedUser = req.cookies?.email;
     try{
         const documents = await ticket.find({createdBy: loggedUser});
-        res.json(documents);
-        return;
+        return res.json(documents);
     }
     catch(err){
         console.error(err);
-        res.send(null);
+        return res.send(null);
     }
-
-    res.end();
 })
 
 router.post('/changeUserDetails', async(req,res) => {
@@ -48,11 +45,10 @@ router.post('/changeUserDetails', async(req,res) => {
     const requests = await findTicketCreatorByEmail(loggedUser);
     const {firstName, lastName, region, city, id, phoneNum} = req.body;
     const email = req.body?.email;
-    let isEmailExist = await checkIfEmailExist(email, loggedUser);
+    const isEmailExist = await checkIfEmailExist(email, loggedUser);
 
     if(isEmailExist){
-        res.send('email already exist in db, try another email');
-        return;
+        return res.send('email already exist in db, try another email');
     }
     if (firstName && lastName && region && city && id && phoneNum && email){
         try{
@@ -72,14 +68,13 @@ router.post('/changeUserDetails', async(req,res) => {
             });
             res.cookie('email', email, {maxAge: 1000 * 60 * 60 * 24});
             res.cookie('firstName', firstName, {maxAge: 1000 * 60 * 60 * 24});
-            res.send('user info updated successfully')
-            return;
+            return res.send('user info updated successfully');
         }catch(err){
             console.error(err);
-            res.send('something went wrong, try again later');
+            return res.send('something went wrong, try again later');
         }
     }else{
-        res.send('something went wrong, try again later');
+        return res.send('something went wrong, try again later');
     }
 })
 
@@ -88,12 +83,11 @@ router.post('/deleteRequest', async(req,res) => {
 
     try{
         await ticket.deleteOne({_id: _id});
-        res.send('request deleted successfully');
-        return;
+        return res.send('request deleted successfully');
     }
     catch(err){
         console.error(err);
-        res.send(null);
+        return res.send(null);
     }
 })
 
@@ -102,8 +96,7 @@ router.get('/calls', async (req,res) => {
 
     try{
         const documents = await ticket.find({helpers: loggedUser});
-        res.json(documents);
-        return;
+        return res.json(documents);
     }
     catch(err){
         console.error(err);
@@ -120,13 +113,37 @@ router.post('/deleteCall', async(req,res) => {
             { _id: _id },
             { $pull: { helpers: loggedUser } }
         );
-        res.send('call deleted successfully');
-        return;
+        return res.send('call deleted successfully');
     }
     catch(err){
         console.error(err);
         re.send(null);
     }
+})
+
+router.post('/getUser',async(req,res)=>{
+    let email = req.body?.email;
+
+    try{
+        const user = await users.findOne({email: email});
+        return res.json(user);
+    }
+    catch(err){
+        console.error(err);
+        return res.send('server error');
+    }
+})
+
+router.post("/updateNumOfHelps",async(req,res)=>{
+    let email = req.body.email;
+    try {
+        const user = await users.findOne({email: email});
+        user.numOfHelps++;
+        await user.save();
+    } catch (error) {
+        console.error(error);
+    }
+
 })
 
 async function findByEmail(email){
@@ -139,31 +156,6 @@ async function findByEmail(email){
         return null;
     }
 }
-
-async function findTicketCreatorByEmail(email){
-    try{
-        const documents = (await ticket.find({createdBy: email}));
-        return documents;
-    }
-    catch(err){
-        console.error(err);
-        return null;
-    }
-}
-
-
-router.post('/getUser',async(req,res)=>{
-    let email = req.body?.email;
-
-    try{
-        const user = await users.findOne({email: email});
-        res.json(user);
-    }
-    catch(err){
-        console.error(err);
-        res.send('server error');
-    }
-})
 
 async function checkIfEmailExist(email, loggedUser) {
     try {
@@ -182,13 +174,15 @@ async function checkIfEmailExist(email, loggedUser) {
     }
 }
 
-
-router.post("/updateNumOfHelps",async(req,res)=>{
-    let email = req.body.email;
-    let user = await users.findOne({email: email});
-user.numOfHelps++;
-user.save();
-
-})
+async function findTicketCreatorByEmail(email){
+    try{
+        const documents = (await ticket.find({createdBy: email}));
+        return documents;
+    }
+    catch(err){
+        console.error(err);
+        return null;
+    }
+}
 
 module.exports = router;

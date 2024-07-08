@@ -13,12 +13,10 @@ router.get('/',(req,res) =>{
 router.post('/checkIfExist',async(req,res) =>{
     //check in data base
     const {email, password} = req.body;
-    if(req.cookies?.isLogged){
 
-    }
-    let user = await findByEmail(email);
-    
-    if(user){
+    try{
+        const user = await users.findOne({email: email});
+
         if (user.password == password) {
             res.cookie('isLogged', 'true', {maxAge: 1000 * 60 * 60 * 24});
             res.cookie('email', user.email, {maxAge: 1000 * 60 * 60 * 24});
@@ -27,22 +25,12 @@ router.post('/checkIfExist',async(req,res) =>{
         }else{
             res.json({flag:false, error:'password inncorrect, try again'});
         }
-    }else{
-        res.json({flag:false, error:'user not found, try again'});
-    }
-});
-
-async function findByEmail(email){
-    try{
-        const documents = await users.findOne({email: email});
-        return documents;
     }
     catch(err){
         console.error(err);
-        return null;
+        return res.json({flag:false, error:'user not found, try again'});;
     }
-}
-
+});
 
 module.exports = router;
 

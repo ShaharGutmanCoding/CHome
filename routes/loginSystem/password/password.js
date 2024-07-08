@@ -16,35 +16,27 @@ router.get('/',(req,res) =>{
 
 router.post('/sendEmail', async(req,res) => {
     const email = req.body?.email;
-    let user;
+    const resetToken = Math.floor(100000 * Math.random() * 900000).toString();
     try {
-        user = await users.findOne({email: email});
+        const user = await users.findOne({email: email});
+
+        try {
+            user.resetPasswordToken = resetToken;
+            user.resetPasswordExpires = Date.now() + 1000 * 60 * 60;
+            await user.save();
+        } catch (error) {
+            console.error(error);
+            return res.send('something went wrong');
+        }
+
     }catch (error){
         console.error(error);
-        res.send('something went wrong')
-        return;
+        return res.send('something went wrong');
     } 
-
-    if(!user){
-        res.send('user not found');
-        return;
-    }
-
-    const resetToken = Math.floor(100000 * Math.random() * 900000).toString();
-    console.log(resetToken);
-
-    try {
-        user.resetPasswordToken = resetToken;
-        user.resetPasswordExpires = Date.now() + 1000 * 60 * 60;
-        await user.save();
-    } catch (error) {
-        console.error(error);
-        res.send('something went wrong')
-    }
 
     await sendPasswordResetEmail(email, resetToken);
 
-    res.cookie('userEmail', user.email, {maxAge: 1000 * 60 * 60})
+    res.cookie('userEmail', email, {maxAge: 1000 * 60 * 60})
     res.send('email sent successfully');
 })
 

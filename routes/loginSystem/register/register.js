@@ -14,12 +14,12 @@ router.post('/createUser', async(req,res) => {
 
     if (firstName && lastName && password && region && city && id && phoneNum && email ) {
         try{
-            let response = await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email, registerDate:getCurrentDate()});
-            res.send(response);
-            return;
+            await users.create({firstName: firstName, lastName: lastName, password: password, region: region, city: city, id: id, phoneNum: phoneNum, email: email, registerDate:getCurrentDate()});
+            return res.send('user created successfully');
         }
         catch(err){
             console.error(err);
+            return res.send('something went wrong, try again');
         }
     }
 })
@@ -27,7 +27,6 @@ router.post('/createUser', async(req,res) => {
 function getCurrentDate() {
     let now = new Date();
     let date = now.toLocaleDateString();
-    console.log(date);
     return `${date}`;
   }
 

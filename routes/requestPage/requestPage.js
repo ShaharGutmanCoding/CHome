@@ -24,13 +24,15 @@ router.post('/newCall',async(req,res) => {
 
     if(category && date && description && loggedUser){  
         try{  
-            await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name})
-            res.send('request created succrssfully')
+            await ticket.create({category: category, date: date, description: description, createdBy: loggedUser, name:name});
+            return res.send('request created succrssfully');
         }
         catch(err){
             console.error(err);
-            res.send('something went wrong')
+            res.send('something went wrong');
         }
+    }else{
+        res.send('something went wrong');
     }
 });
 
@@ -39,7 +41,7 @@ router.post('/getUserName',async(req,res)=>{
 
     try{
         const user = await users.findOne({email: email});
-        res.json(user);
+        return res.json(user);
     }
     catch(err){
         console.error(err);

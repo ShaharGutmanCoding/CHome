@@ -20,8 +20,7 @@ router.get('/',(req,res) =>{
 router.get("/getCalls", async(req,res)=>{
     try{
         var calls = await ticket.find();
-        res.json(calls);
-        return;
+        return res.json(calls);
     }
     catch(err){
         console.error(err);
@@ -36,19 +35,33 @@ router.post("/addHelperAndHelpingSuggestion",async (req,res)=>{
       $push: { helpers: helperEmail}
     };
   
+    try {
         await ticket.updateOne(filter,update);
+    } catch (error) {
+        console.error(error);
+    }
 
     filter = { email: helperEmail }; 
     update = {
       $push: { helpingSuggestions: givenID}
     };
-    await users.updateOne(filter,update);
 
-    let helpedTicket = await ticket.findOne({_id: givenID});
-    if(helpedTicket.status==="הבקשה מחכה לאישור מאחד העוזרים באתר"){
-        helpedTicket.status=' הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר'
-        helpedTicket.save()
+    try {
+        await ticket.updateOne(filter,update);
+    } catch (error) {
+        console.error(error);
+    }
+
+    try {
+        let helpedTicket = await ticket.findOne({_id: givenID});
+        if(helpedTicket.status==="הבקשה מחכה לאישור מאחד העוזרים באתר"){
+            helpedTicket.status=' הבקשה נענתה על ידי אחד או יותר מהעוזרים באתר'
+            helpedTicket.save()
+        }
+    } catch (error) {
+        console.error(error);
     }
     res.end();
 })
+
 module.exports = router;
