@@ -1,5 +1,6 @@
 let form = document.getElementById('registerForm');
 let failTry = document.getElementById('failMessage');
+let loadingSpinners = document.getElementById('loadingSpinners');
 
 form.addEventListener('submit', async(event) => {
     let firstName = document.getElementById('firstName').value;
@@ -11,7 +12,8 @@ form.addEventListener('submit', async(event) => {
     let city = document.getElementById('city').value;
     let phoneNum = document.getElementById('phoneNumber').value;
     let email = document.getElementById('email').value;
-
+    
+    loadingSpinners.style.display = 'block';
     event.preventDefault();
     
     if (password == confirmPassword) {
@@ -21,9 +23,10 @@ form.addEventListener('submit', async(event) => {
             headers:{'Content-Type': 'application/x-www-form-urlencoded'},
             body:`firstName=${firstName}&lastName=${lastName}&password=${password}&region=${region}&city=${city}&id=${id}&phoneNum=${phoneNum}&email=${email}`
         })
-        .then(response => response.json())
+        .then(response => response.text())
         .then((response) => {
-            if (response === 'user created successfully') {
+            loadingSpinners.style.display = 'none';
+            if (response == 'user created successfully') {
                 window.location.href = '/loginSystem/login'
             } else {
                 failTry.textContent = response;
